@@ -17,6 +17,8 @@ import { AppConfigModule } from './config/config.module';
 import { AppLayoutComponent } from "./app.layout.component";
 import { AppFooterComponent } from './app-footer/app.footer.component';
 import { AppSidebarComponent } from './app-sidebar/app.sidebar.component';
+import { DialogModule } from 'primeng/dialog';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
     declarations: [
@@ -39,6 +41,7 @@ import { AppSidebarComponent } from './app-sidebar/app.sidebar.component';
         InputSwitchModule,
         RippleModule,
         RouterModule,
+        TooltipModule,
         AppConfigModule
     ],
     exports: [AppLayoutComponent]

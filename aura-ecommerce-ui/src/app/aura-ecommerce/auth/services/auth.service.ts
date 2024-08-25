@@ -13,21 +13,23 @@ export class AuthService {
   isAuthenticated = false;
   userProfile: User | null = null;
   private accessToken: string = '';
-  private baseUrl = 'http://localhost:8089/api/auth/signin';  // Update to match your login endpoint
+  private baseUrl = 'http://localhost:8089/api/auth';
 
   constructor(private http: HttpClient, private router: Router) {
     this.loadJwtTokenFromLocalStorage();
   }
 
-  register(user: { username: string, email: string, password: string }): Observable<any> {
+  register(user: { username: string, email: string, password: string ,role:string[]}): Observable<any> {
     return this.http.post(`${this.baseUrl}/signup`, user);
   }
+
+
   public login(user: { username: string, email: string, password: string }): Observable<any> {
     const options = {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     };
 
-    return this.http.post<{ 'token': string }>(this.baseUrl, user, options).pipe(
+    return this.http.post<{ 'token': string }>(`${this.baseUrl}/signin`, user, options).pipe(
       tap(data => {
         this.loadProfile(data['token']);
         this.router.navigate(["/"]);
@@ -50,7 +52,7 @@ export class AuthService {
         username: decodedJwt.userName,
         email: decodedJwt.email,
         roles: decodedJwt.roles,
-        token:this.accessToken
+        token: this.accessToken
       };
 
       localStorage.setItem("jwt-token", this.accessToken);
@@ -81,7 +83,7 @@ export class AuthService {
           username: decodedJwt.userName,
           email: decodedJwt.email,
           roles: decodedJwt.roles,
-          token:this.accessToken
+          token: this.accessToken
         };
       } catch (e) {
         console.error('Error decoding token from local storage:', e);
@@ -92,10 +94,7 @@ export class AuthService {
     }
   }
 
-  // Example method to check if a user has a specific role
   hasRole(role: string): boolean {
     return this.userProfile?.roles.includes(role) ?? false;
   }
 }
-
-
