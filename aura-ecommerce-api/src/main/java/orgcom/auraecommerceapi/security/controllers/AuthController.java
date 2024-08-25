@@ -14,7 +14,7 @@ import orgcom.auraecommerceapi.security.services.impl.AuthServiceImpl;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RestController
+@RestController 
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -33,4 +33,5 @@ public class AuthController {
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
     return authServiceImpl.registerUser(signUpRequest);
   }
+
 }

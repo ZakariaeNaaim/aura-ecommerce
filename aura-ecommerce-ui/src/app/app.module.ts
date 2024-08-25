@@ -11,6 +11,8 @@ import { IconService } from './aura-ecommerce/service/icon.service';
 import { NodeService } from './aura-ecommerce/service/node.service';
 import { PhotoService } from './aura-ecommerce/service/photo.service';
 import { AppLayoutModule } from './layout/app.layout.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './aura-ecommerce/auth/auth.interceptor';
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
@@ -18,7 +20,8 @@ import { AppLayoutModule } from './layout/app.layout.module';
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService
+        PhotoService, ProductService,
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
     ],
     bootstrap: [AppComponent],
 })
