@@ -2,12 +2,14 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './aura-ecommerce/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
+import { AuthGuard } from './aura-ecommerce/auth/auth.guard';
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
             {
                 path: '', component: AppLayoutComponent,
+                canActivate:[AuthGuard],
                 children: [
                     { path: '', loadChildren: () => import('./aura-ecommerce/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'blocks', loadChildren: () => import('./aura-ecommerce/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
