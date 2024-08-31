@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { User } from '../models/user.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
   isAuthenticated = false;
   userProfile: User | null = null;
   private accessToken: string = '';
-  private baseUrl = 'http://localhost:8089/api/auth';
+  private baseUrl = environment.apiUrl +'/api/auth';
 
   constructor(private http: HttpClient, private router: Router) {
     this.loadJwtTokenFromLocalStorage();
