@@ -16,6 +16,10 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
+import { UserDialogComponent } from './dialogs/user-dialog/user-dialog.component';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @NgModule({
     imports: [
@@ -34,8 +38,12 @@ import { DialogModule } from 'primeng/dialog';
         DropdownModule,
         RadioButtonModule,
         InputNumberModule,
-        DialogModule
+        DialogModule,
+        ConfirmDialogModule,
+        MultiSelectModule,
     ],
-    declarations: [UserComponent]
+    declarations: [UserComponent,UserDialogComponent],
+    providers: [ConfirmationService, MessageService]
+
 })
 export class UserModule { }
