@@ -13,7 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import orgcom.auraecommerceapi.security.models.User;
+import orgcom.auraecommerceapi.security.entities.User;
 
 @Getter
 @Setter

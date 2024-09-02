@@ -1,6 +1,7 @@
 export interface AuraUser{
+    id?:number;
     username:string;
     password:string;
     email:string;
-    roles:string[];
+    roles: { id: number; name: string }[];
 }

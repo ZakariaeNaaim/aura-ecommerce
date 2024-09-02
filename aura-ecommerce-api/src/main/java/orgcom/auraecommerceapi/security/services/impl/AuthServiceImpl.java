@@ -9,9 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import orgcom.auraecommerceapi.security.models.ERole;
-import orgcom.auraecommerceapi.security.models.Role;
-import orgcom.auraecommerceapi.security.models.User;
+import orgcom.auraecommerceapi.security.entities.ERole;
+import orgcom.auraecommerceapi.security.entities.Role;
+import orgcom.auraecommerceapi.security.entities.User;
 import orgcom.auraecommerceapi.security.payload.request.LoginRequest;
 import orgcom.auraecommerceapi.security.payload.request.SignupRequest;
 import orgcom.auraecommerceapi.security.payload.response.JwtResponse;
@@ -81,28 +81,34 @@ public class AuthServiceImpl implements AuthService {
           Set<Role> roles = new HashSet<>();
 
           if (strRoles == null) {
-               Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+               Role userRole = roleRepository.findByName(ERole.Users)
                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                roles.add(userRole);
           } else {
                strRoles.forEach(role -> {
                     switch (role) {
-                         case "admin":
-                              Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                         case "Orders":
+                              Role adminRole = roleRepository.findByName(ERole.Orders)
                                       .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                               roles.add(adminRole);
 
                               break;
-                         case "mod":
-                              Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                         case "Products":
+                              Role modRole = roleRepository.findByName(ERole.Products)
                                       .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                               roles.add(modRole);
 
                               break;
-                         default:
-                              Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                         case "Users":
+                              Role usersRole = roleRepository.findByName(ERole.Users)
                                       .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                              roles.add(userRole);
+                              roles.add(usersRole);
+
+                              break;
+                         default:
+                              Role dashboardRole = roleRepository.findByName(ERole.Dashboard)
+                                      .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                              roles.add(dashboardRole);
                     }
                });
           }

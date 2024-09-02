@@ -10,9 +10,10 @@
             <input id="email" pInputText [(ngModel)]="user.email" required [ngClass]="{'ng-invalid ng-dirty': submitted && !user.email}" />
             <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.email">Email is required.</small>
         </div>
-        <div class="field">
+        <!-- Only show the password field if it's a new user (no id) -->
+        <div class="field" *ngIf="!user.id">
             <label for="password">Password</label>
-            <input id="password" pInputText [(ngModel)]="user.password" type="password" required [ngClass]="{'ng-invalid ng-dirty': submitted && !user.password}" />
+            <p-password [(ngModel)]="user.password" type="password" required [ngClass]="{'ng-invalid ng-dirty': submitted && !user.password}" id="password1" placeholder="Password" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
             <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.password">Password is required.</small>
         </div>
         <div class="field">
