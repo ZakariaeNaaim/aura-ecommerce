@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import orgcom.auraecommerceapi.security.models.User;
+import orgcom.auraecommerceapi.security.entities.User;
 import orgcom.auraecommerceapi.security.repository.UserRepository;
 
 

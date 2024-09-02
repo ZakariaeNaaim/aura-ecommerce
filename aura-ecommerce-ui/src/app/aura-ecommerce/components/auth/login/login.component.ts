@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/aura-ecommerce/auth/services/auth.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
@@ -14,7 +15,8 @@ import { LayoutService } from 'src/app/layout/service/app.layout.service';
             margin-right: 1rem;
             color: var(--primary-color) !important;
         }
-    `]
+    `],
+    providers: [MessageService]
 })
 export class LoginComponent {
 
@@ -24,7 +26,8 @@ export class LoginComponent {
 
     loginForm: FormGroup;
 
-    constructor(private fb: FormBuilder, private authService: AuthService,public layoutService: LayoutService,public router : Router) {}
+    constructor(private fb: FormBuilder, private authService: AuthService,public layoutService: LayoutService,
+      public router : Router, private messageService: MessageService) {}
   
     ngOnInit(): void {
       this.loginForm = this.fb.group({
@@ -37,12 +40,12 @@ export class LoginComponent {
       if (this.loginForm.valid) {
         const credentials = this.loginForm.value;
         this.authService.login(credentials).subscribe({
-          next: (response) => {
-            console.log('Login successful!', response);
+          next: () => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'logged in !' });
             this.router.navigate(['/']);
           },
-          error: (error) => {
-            console.error('Login failed', error);
+          error: () => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: "something wrong" });
           }
         });
       }

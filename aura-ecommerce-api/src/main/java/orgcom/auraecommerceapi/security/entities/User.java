@@ -1,4 +1,4 @@
-package orgcom.auraecommerceapi.security.models;
+package orgcom.auraecommerceapi.security.entities;
 
 import java.util.HashSet;
 import java.util.Set;

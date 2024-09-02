@@ -10,9 +10,9 @@ import { SelectItem } from 'src/app/aura-ecommerce/components/shared/models/p-mu
 export class UserDialogComponent {
   
   roles: SelectItem[] = [
-    { name: 'Orders', code: 'orders' },
-    { name: 'Products', code: 'products' },
-    { name: 'Users', code: 'users' }
+    { name: 'Orders', code: 1 },
+    { name: 'Products', code: 2 },
+    { name: 'Users', code: 3 }
   ];
   selectedRoles: SelectItem[] =[];
 
@@ -34,7 +34,9 @@ export class UserDialogComponent {
   }
 
   private onUserChange(): void {
-    this.selectedRoles =this.roles.filter(role => this._user.roles.includes(role.code));  
+    this.selectedRoles = this.roles.filter(role => 
+      this._user.roles.some(userRole => userRole.id === role.code)
+    );
   }
 
 
@@ -52,7 +54,15 @@ export class UserDialogComponent {
   }
 
   isValid(): boolean {
-    this.user.roles = this.selectedRoles.map(role => role.code);
-    return this.user.username.trim() !== '' && this.user.email.trim() !== '' && this.user.password.trim() !== '';
+    this.user.roles = this.selectedRoles.map(role => ({
+      id: role.code,
+      name: role.name
+    }));
+    
+    const isUsernameValid = this.user.username.trim() !== '';
+    const isEmailValid = this.user.email.trim() !== '';
+    const isPasswordValid = this.user.password.trim() !== '';
+  
+    return isUsernameValid && isEmailValid && isPasswordValid;
   }
 }

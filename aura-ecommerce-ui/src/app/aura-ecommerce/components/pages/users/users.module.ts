@@ -20,6 +20,11 @@ import { UserDialogComponent } from './dialogs/user-dialog/user-dialog.component
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { PasswordModule } from 'primeng/password';
+import { TooltipModule } from 'primeng/tooltip';
+import { OrderListModule } from 'primeng/orderlist';
+import { PickListModule } from 'primeng/picklist';
+import { DataViewModule } from 'primeng/dataview';
 
 @NgModule({
     imports: [
@@ -41,6 +46,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
         DialogModule,
         ConfirmDialogModule,
         MultiSelectModule,
+        PasswordModule ,
+        OrderListModule,
+        PickListModule,
+        TooltipModule,
+        DataViewModule
     ],
     declarations: [UserComponent,UserDialogComponent],
     providers: [ConfirmationService, MessageService]

@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import orgcom.auraecommerceapi.security.models.ERole;
-import orgcom.auraecommerceapi.security.models.Role;
+import orgcom.auraecommerceapi.security.entities.ERole;
+import orgcom.auraecommerceapi.security.entities.Role;
 
 
 @Repository
