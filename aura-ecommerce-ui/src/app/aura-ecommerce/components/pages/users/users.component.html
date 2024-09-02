@@ -1,6 +1,6 @@
 <div class="grid">
     <div class="col-12">
-        <div class="card surface-card shadow-3 p-4 border-round-lg">
+        <div class="card surface-card shadow-4 p-4 border-round-lg">
             <div class="flex justify-content-between align-items-center mb-4">
                 <h4 class="text-900 font-bold">User Management</h4>
                 <button pButton type="button" label="Add User" icon="pi pi-plus" class="p-button-rounded p-button-primary" (click)="showDialog()"></button>
@@ -9,22 +9,22 @@
             <div class="surface-ground px-4 py-5">
                 <div class="grid">
                     <div class="col-12 md:col-6 lg:col-4 xl:col-3" *ngFor="let user of users">
-                        <div class="surface-card shadow-2 p-4 border-round">
-                            <div class="flex justify-content-between align-items-center mb-3">
-                                <div>
-                                    <div class="text-900 font-medium text-xl mb-1">{{ user.username }}</div>
-                                    <div class="text-700 font-medium">{{ user.email }}</div>
-                                </div>
-                                <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width:3rem;height:3rem">
+                        <div class="user-card surface-card shadow-3 p-4 border-round border-1 border-gray-200 transition-transform transform hover:scale-105 h-full">
+                            <div class="flex align-items-center mb-3">
+                                <div class="user-icon flex align-items-center justify-content-center border-round bg-blue-50" style="width:4rem;height:4rem">
                                     <i class="pi pi-user text-blue-500 text-2xl"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <div class="text-900 font-medium text-xl mb-1">{{ user.username }}</div>
+                                    <!-- <div class="text-700 font-medium text-sm">{{ user.email }}</div> -->
                                 </div>
                             </div>
                             <div class="text-600 mb-3">
                                 <span class="font-bold">Roles:</span> <span class="text-900">{{ formatRoles(user.roles) }}</span>
                             </div>
-                            <div class="flex justify-content-end gap-2">
-                                <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info bg-info-100 text-info-900" (click)="showDialog(user)"></button>
-                                <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger bg-danger-100 text-danger-900" (click)="openConfirmDialog($event,user)"></button>
+                            <div class="flex justify-content-end gap-2 mt-auto">
+                                <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info bg-info-50 text-info-900" (click)="showDialog(user)"></button>
+                                <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger bg-danger-50 text-danger-900" (click)="openConfirmDialog($event,user)"></button>
                             </div>
                         </div>
                     </div>

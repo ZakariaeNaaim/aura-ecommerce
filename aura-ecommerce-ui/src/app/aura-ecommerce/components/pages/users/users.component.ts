@@ -5,6 +5,7 @@ import { UserManagementService } from './services/user-management.service';
 
 @Component({
   templateUrl: './users.component.html',
+  styleUrl: './users.component.scss',
   providers: [MessageService]
 })
 export class UserComponent implements OnInit {
