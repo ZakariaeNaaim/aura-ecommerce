@@ -6,12 +6,14 @@ import orgcom.auraecommerceapi.entities.Order;
 import orgcom.auraecommerceapi.enums.OrderEtatEnum;
 import orgcom.auraecommerceapi.shared.ResponseGenericResult;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 public interface OrderService {
     ResponseGenericResult<Boolean> saveOrder(Order order);
-    ResponseGenericResult<Order> getOrder(String commandName);
-    List<Order> getAllOrders();
-    ResponseGenericResult<Order> annullateOrder(OrderEtatEnum orderEtatEnum);
+    ResponseGenericResult<Order> getOrder(String orderName);
+    ResponseGenericResult<List<Order>> getAllOrders();
     ResponseGenericResult<List<Order>> getAnnulatedOrders();
+    ResponseGenericResult<List<Order>> getOrdersByDate(String orderDate);
+
 }

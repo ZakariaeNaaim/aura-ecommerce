@@ -2,9 +2,11 @@ package orgcom.auraecommerceapi.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import orgcom.auraecommerceapi.enums.OrderEtatEnum;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -17,5 +19,8 @@ public class Order implements Serializable {
     private double totalCommand;
     @Enumerated(EnumType.STRING)
     private OrderEtatEnum etat;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date orderDate;
 
 }

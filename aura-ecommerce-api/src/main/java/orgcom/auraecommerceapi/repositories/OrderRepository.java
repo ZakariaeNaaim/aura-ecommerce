@@ -5,11 +5,12 @@ import org.springframework.stereotype.Repository;
 import orgcom.auraecommerceapi.entities.Order;
 import orgcom.auraecommerceapi.enums.OrderEtatEnum;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    Order findCommandByReference(String reference);
-    Order findOrderByEtat(OrderEtatEnum etat);
+    Order findOrderByReference(String reference);
     List<Order> findOrdersByEtat(OrderEtatEnum etat);
+    List<Order> findOrdersByOrderDate(Date orderDate);
 }
