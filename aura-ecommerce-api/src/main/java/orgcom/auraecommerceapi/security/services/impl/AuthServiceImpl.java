@@ -47,16 +47,7 @@ public class AuthServiceImpl implements AuthService {
           SecurityContextHolder.getContext().setAuthentication(authentication);
           String jwt = jwtUtils.generateJwtToken(authentication);
 
-          UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-          List<String> roles = userDetails.getAuthorities().stream()
-                  .map(item -> item.getAuthority())
-                  .collect(Collectors.toList());
-
-          return ResponseEntity.ok(new JwtResponse(jwt,
-                  userDetails.getId(),
-                  userDetails.getUsername(),
-                  userDetails.getEmail(),
-                  roles));
+          return ResponseEntity.ok(new JwtResponse(jwt));
      }
 
      @Override
@@ -81,39 +72,39 @@ public class AuthServiceImpl implements AuthService {
           Set<Role> roles = new HashSet<>();
 
           if (strRoles == null) {
-               Role userRole = roleRepository.findByName(ERole.Dashboard)
+               Role userRole = roleRepository.findByName(ERole.ROLE_DASHBOARD)
                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                roles.add(userRole);
           } else {
                strRoles.forEach(role -> {
                     switch (role) {
-                         case "Orders":
-                              Role adminRole = roleRepository.findByName(ERole.Orders)
+                         case "ROLE_ORDERS":
+                              Role adminRole = roleRepository.findByName(ERole.ROLE_ORDERS)
                                       .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                               roles.add(adminRole);
 
                               break;
-                         case "Products":
-                              Role modRole = roleRepository.findByName(ERole.Products)
+                         case "ROLE_PRODUCTS":
+                              Role modRole = roleRepository.findByName(ERole.ROLE_PRODUCTS)
                                       .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                               roles.add(modRole);
 
                               break;
-                         case "Users":
-                              Role usersRole = roleRepository.findByName(ERole.Users)
+                         case "ROLE_USERS":
+                              Role usersRole = roleRepository.findByName(ERole.ROLE_USERS)
                                       .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                               roles.add(usersRole);
 
                               break;
                          default:
-                              Role dashboardRole = roleRepository.findByName(ERole.Dashboard)
+                              Role dashboardRole = roleRepository.findByName(ERole.ROLE_DASHBOARD)
                                       .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                               roles.add(dashboardRole);
                     }
                });
           }
 
-          user.setRoles(roles);
+          user.setRole(roles);
           userRepository.save(user);
 
           return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

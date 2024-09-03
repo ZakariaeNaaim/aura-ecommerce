@@ -1,8 +1,8 @@
 package orgcom.auraecommerceapi.security.entities;
 
 public enum ERole {
-  Orders,
-  Products,
-  Users,
-  Dashboard
+  ROLE_ORDERS,
+  ROLE_PRODUCTS,
+  ROLE_USERS,
+  ROLE_DASHBOARD
 }

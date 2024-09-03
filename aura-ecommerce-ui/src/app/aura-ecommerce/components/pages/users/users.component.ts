@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuraUser } from './models/aura-user.model';
 import { UserManagementService } from './services/user-management.service';
+import { AuthService } from 'src/app/aura-ecommerce/auth/services/auth.service';
 
 @Component({
   templateUrl: './users.component.html',
@@ -13,20 +14,24 @@ export class UserComponent implements OnInit {
 
   users: AuraUser[] = [];
   displayDialog: boolean = false;
-  selectedUser: AuraUser = { username: '', email: '', password: '', roles: [] };
+  selectedUser: AuraUser = { id : 0,username: '', email: '', password: '', role: [] };
   isEditing: boolean = false;
 
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
-    private userManagementService: UserManagementService
+    private userManagementService: UserManagementService,private authService:AuthService
   ) { }
 
   ngOnInit(): void {
     this.loadUsers();
   }
 
-  formatRoles(roles: { id: number; name: string }[]): string {
-    return roles?.map(role => role.name).join(', ');
+  formatRoles(role: { id: number; name: string }[]): string {
+    return role?.map(role => {
+      const nameWithoutPrefix = role.name?.replace('ROLE_', ''); 
+      return nameWithoutPrefix?.charAt(0)?.toUpperCase() + nameWithoutPrefix?.slice(1)?.toLowerCase(); 
+    }).join(', ');
   }
+  
 
   loadUsers(): void {
     this.userManagementService.getAllUsers().subscribe(
@@ -46,7 +51,7 @@ export class UserComponent implements OnInit {
       this.selectedUser = { ...user };
       this.isEditing = true;
     } else {
-      this.selectedUser = { username: '', email: '', password: '', roles: [] };
+      this.selectedUser = { username: '', email: '', password: '', role: [] };
       this.isEditing = false;
     }
     this.displayDialog = true;
@@ -115,11 +120,15 @@ export class UserComponent implements OnInit {
   }
 
   private createUser(user:AuraUser){
-    this.userManagementService.createUser(user).subscribe({
+    const clonedUser = structuredClone(user);
+    clonedUser.role = clonedUser.role.map(role => role.name);
+
+    this.authService.register(clonedUser).subscribe({
       next:(res)=>{
         if(res){
           this.users.push(user);
           this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'user created' });
+          this.loadUsers();
         }
       },
       error:()=>{

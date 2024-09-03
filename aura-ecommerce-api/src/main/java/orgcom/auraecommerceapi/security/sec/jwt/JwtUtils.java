@@ -2,6 +2,9 @@ package orgcom.auraecommerceapi.security.sec.jwt;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,13 +31,22 @@ public class JwtUtils {
 
     UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
+    Map<String, Object> claims = new HashMap<>();
+    claims.put("id", userPrincipal.getId());
+    claims.put("email", userPrincipal.getEmail());
+    claims.put("role", userPrincipal.getAuthorities().stream()
+            .map(item -> item.getAuthority())
+            .collect(Collectors.toList()));
+
     return Jwts.builder()
-        .subject(userPrincipal.getUsername())
-        .issuedAt(new Date())
-        .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
-        .signWith(key(), SignatureAlgorithm.HS256)
-        .compact();
+            .claims(claims)
+            .subject(userPrincipal.getUsername())
+            .issuedAt(new Date())
+            .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
+            .signWith(key(), SignatureAlgorithm.HS256)
+            .compact();
   }
+
   
   private Key key() {
     return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
