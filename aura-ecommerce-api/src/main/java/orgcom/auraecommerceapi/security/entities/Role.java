@@ -1,4 +1,4 @@
-package orgcom.auraecommerceapi.security.models;
+package orgcom.auraecommerceapi.security.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

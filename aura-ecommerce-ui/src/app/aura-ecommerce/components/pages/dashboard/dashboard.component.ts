@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { Product } from '../../models/product';
-import { ProductService } from '../../service/product.service';
 import { Subscription, debounceTime } from 'rxjs';
+import { Product } from 'src/app/aura-ecommerce/models/product';
+import { ProductService } from 'src/app/aura-ecommerce/service/product.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
 @Component({

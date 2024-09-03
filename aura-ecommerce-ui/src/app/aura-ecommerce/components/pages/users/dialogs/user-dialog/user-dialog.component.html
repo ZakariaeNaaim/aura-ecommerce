@@ -1,0 +1,37 @@
+<p-dialog [(visible)]="display" [style]="{ width: '450px' }" header="User Details" modal="modal" [responsive]="true"
+    (onHide)="hideDialog()" class="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="username">Username</label>
+            <input id="username" pInputText [(ngModel)]="user.username" required autofocus [ngClass]="{
+                    'ng-invalid ng-dirty': submitted && !user.username
+                }" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.username">Username is required.</small>
+        </div>
+        <div class="field">
+            <label for="email">Email</label>
+            <input id="email" pInputText [(ngModel)]="user.email" required
+                [ngClass]="{ 'ng-invalid ng-dirty': submitted && !user.email }" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.email">Email is required.</small>
+        </div>
+        <!-- Only show the password field if it's a new user (no id) -->
+        <div class="field" *ngIf="!user.id">
+            <label for="password">Password</label>
+            <p-password [(ngModel)]="user.password" type="password" required [ngClass]="{
+                    'ng-invalid ng-dirty': submitted && !user.password
+                }" id="password1" placeholder="Password" [toggleMask]="true" styleClass="mb-5"
+                inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.password">Password is required.</small>
+        </div>
+        <div class="field">
+            <label for="roles">Roles</label>
+            <p-multiSelect id="roles" [options]="roles" [(ngModel)]="selectedRoles"
+                optionLabel="name" placeholder="Select Roles" appendTo="body"></p-multiSelect>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveUser()"></button>
+    </ng-template>
+</p-dialog>

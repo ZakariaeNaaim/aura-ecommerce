@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { User } from '../models/user.model';
+import { environment } from 'src/environments/environment';
+import { AuraUser } from '../../components/pages/users/models/aura-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +15,13 @@ export class AuthService {
   isAuthenticated = false;
   userProfile: User | null = null;
   private accessToken: string = '';
-  private baseUrl = 'http://localhost:8089/api/auth';
+  private baseUrl = environment.apiUrl +'/api/auth';
 
   constructor(private http: HttpClient, private router: Router) {
     this.loadJwtTokenFromLocalStorage();
   }
 
-  register(user: { username: string, email: string, password: string ,role:string[]}): Observable<any> {
+  register(user:AuraUser): Observable<any> {
     return this.http.post(`${this.baseUrl}/signup`, user);
   }
 
@@ -41,17 +43,19 @@ export class AuthService {
     );
   }
 
-  private loadProfile(token: string): void {
-    this.accessToken = token;
+  private loadProfile(data: string): void {
+    this.accessToken = data;
     this.isAuthenticated = true;
 
     try {
       const decodedJwt: any = jwtDecode(this.accessToken);
+      this.checkTokenExpired(decodedJwt.exp);
+     
       this.userProfile = {
-        id: decodedJwt.userId,
-        username: decodedJwt.userName,
+        id: decodedJwt.Id,
+        username: decodedJwt.sub,
         email: decodedJwt.email,
-        roles: decodedJwt.roles,
+        role: decodedJwt.role,
         token: this.accessToken
       };
 
@@ -70,7 +74,7 @@ export class AuthService {
     this.router.navigateByUrl("/login");
   }
 
-  private loadJwtTokenFromLocalStorage(): void {
+  public loadJwtTokenFromLocalStorage(): void {
     const token = localStorage.getItem("jwt-token");
     if (token) {
       this.accessToken = token;
@@ -80,9 +84,9 @@ export class AuthService {
         const decodedJwt: any = jwtDecode(this.accessToken);
         this.userProfile = {
           id: decodedJwt.userId,
-          username: decodedJwt.userName,
+          username: decodedJwt.sub,
           email: decodedJwt.email,
-          roles: decodedJwt.roles,
+          role: decodedJwt.role,
           token: this.accessToken
         };
       } catch (e) {
@@ -94,7 +98,15 @@ export class AuthService {
     }
   }
 
+  private checkTokenExpired(exp:any):void{
+    const currentTime = Math.floor(Date.now() / 1000);
+    if (exp < currentTime) {
+      this.logout();
+      return;
+    }
+  }
+
   hasRole(role: string): boolean {
-    return this.userProfile?.roles.includes(role) ?? false;
+    return this.userProfile?.role.includes(role) ?? false;
   }
 }

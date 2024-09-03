@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CrudRoutingModule } from './crud-routing.module';
-import { CrudComponent } from './crud.component';
+import { UserRoutingModule } from './users-routing.module';
+import { UserComponent } from './users.component';
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
@@ -16,11 +16,20 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
+import { UserDialogComponent } from './dialogs/user-dialog/user-dialog.component';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { PasswordModule } from 'primeng/password';
+import { TooltipModule } from 'primeng/tooltip';
+import { OrderListModule } from 'primeng/orderlist';
+import { PickListModule } from 'primeng/picklist';
+import { DataViewModule } from 'primeng/dataview';
 
 @NgModule({
     imports: [
         CommonModule,
-        CrudRoutingModule,
+        UserRoutingModule,
         TableModule,
         FileUploadModule,
         FormsModule,
@@ -34,8 +43,17 @@ import { DialogModule } from 'primeng/dialog';
         DropdownModule,
         RadioButtonModule,
         InputNumberModule,
-        DialogModule
+        DialogModule,
+        ConfirmDialogModule,
+        MultiSelectModule,
+        PasswordModule ,
+        OrderListModule,
+        PickListModule,
+        TooltipModule,
+        DataViewModule
     ],
-    declarations: [CrudComponent]
+    declarations: [UserComponent,UserDialogComponent],
+    providers: [ConfirmationService, MessageService]
+
 })
-export class CrudModule { }
+export class UserModule { }

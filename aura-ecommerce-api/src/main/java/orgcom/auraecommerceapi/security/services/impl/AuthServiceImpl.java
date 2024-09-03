@@ -9,9 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import orgcom.auraecommerceapi.security.models.ERole;
-import orgcom.auraecommerceapi.security.models.Role;
-import orgcom.auraecommerceapi.security.models.User;
+import orgcom.auraecommerceapi.security.entities.ERole;
+import orgcom.auraecommerceapi.security.entities.Role;
+import orgcom.auraecommerceapi.security.entities.User;
 import orgcom.auraecommerceapi.security.payload.request.LoginRequest;
 import orgcom.auraecommerceapi.security.payload.request.SignupRequest;
 import orgcom.auraecommerceapi.security.payload.response.JwtResponse;
@@ -47,16 +47,7 @@ public class AuthServiceImpl implements AuthService {
           SecurityContextHolder.getContext().setAuthentication(authentication);
           String jwt = jwtUtils.generateJwtToken(authentication);
 
-          UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-          List<String> roles = userDetails.getAuthorities().stream()
-                  .map(item -> item.getAuthority())
-                  .collect(Collectors.toList());
-
-          return ResponseEntity.ok(new JwtResponse(jwt,
-                  userDetails.getId(),
-                  userDetails.getUsername(),
-                  userDetails.getEmail(),
-                  roles));
+          return ResponseEntity.ok(new JwtResponse(jwt));
      }
 
      @Override
@@ -81,33 +72,39 @@ public class AuthServiceImpl implements AuthService {
           Set<Role> roles = new HashSet<>();
 
           if (strRoles == null) {
-               Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+               Role userRole = roleRepository.findByName(ERole.ROLE_DASHBOARD)
                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                roles.add(userRole);
           } else {
                strRoles.forEach(role -> {
                     switch (role) {
-                         case "admin":
-                              Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                         case "ROLE_ORDERS":
+                              Role adminRole = roleRepository.findByName(ERole.ROLE_ORDERS)
                                       .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                               roles.add(adminRole);
 
                               break;
-                         case "mod":
-                              Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                         case "ROLE_PRODUCTS":
+                              Role modRole = roleRepository.findByName(ERole.ROLE_PRODUCTS)
                                       .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                               roles.add(modRole);
 
                               break;
-                         default:
-                              Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                         case "ROLE_USERS":
+                              Role usersRole = roleRepository.findByName(ERole.ROLE_USERS)
                                       .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                              roles.add(userRole);
+                              roles.add(usersRole);
+
+                              break;
+                         default:
+                              Role dashboardRole = roleRepository.findByName(ERole.ROLE_DASHBOARD)
+                                      .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                              roles.add(dashboardRole);
                     }
                });
           }
 
-          user.setRoles(roles);
+          user.setRole(roles);
           userRepository.save(user);
 
           return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
