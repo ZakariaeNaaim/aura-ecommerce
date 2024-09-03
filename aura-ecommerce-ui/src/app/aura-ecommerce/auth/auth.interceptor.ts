@@ -12,7 +12,6 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Bypass interceptor for excluded URLs
     if (this.excludedUrls.some(url => request.url.includes(url))) {
       return next.handle(request);
     }
@@ -22,7 +21,6 @@ export class AuthInterceptor implements HttpInterceptor {
     if (token) {
       const isTokenExpired = this.isTokenExpired(token);
       if (isTokenExpired) {
-        // Redirect to login if token is expired
         this.router.navigate(['/auth/login']);
         return throwError(() => new Error('Token is expired'));
       } else {
@@ -37,8 +35,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 || error.status === 403) {
-          // If the user is unauthorized, redirect to login
-          this.router.navigate(['/auth/login']);
+          this.router.navigate(['/auth/access']);
         }
         return throwError(() => error);
       })

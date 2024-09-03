@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuraUser } from '../models/aura-user.model';
 import { Observable } from 'rxjs';
-import { ResponseGenericResult } from '../../../shared/models/response-generic-result/response-generic-result.model';
 import { environment } from 'src/environments/environment';
+import { ResponseGenericResult } from 'src/app/shared/models/response-generic-result/response-generic-result.model';
 
 @Injectable({
   providedIn: 'root'

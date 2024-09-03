@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import orgcom.auraecommerceapi.security.entities.ERole;
 import orgcom.auraecommerceapi.security.sec.jwt.AuthEntryPointJwt;
 import orgcom.auraecommerceapi.security.sec.jwt.AuthTokenFilter;
 import orgcom.auraecommerceapi.security.sec.services.UserDetailsServiceImpl;
@@ -70,6 +71,8 @@ public class WebSecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth ->
                     auth.requestMatchers("/api/auth/**").permitAll()
+                            .requestMatchers("/orders/**").hasAuthority("ROLE_ORDERS")
+                            .requestMatchers("/users/**","/users").hasAuthority("ROLE_USERS")
                             .anyRequest().authenticated()
             );
 

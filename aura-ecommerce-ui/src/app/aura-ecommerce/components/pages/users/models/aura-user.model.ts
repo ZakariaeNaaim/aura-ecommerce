@@ -3,5 +3,5 @@ export interface AuraUser{
     username:string;
     password:string;
     email:string;
-    roles: { id: number; name: string }[];
+    role: { id: number; name: string }[] | string[];
 }

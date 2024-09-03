@@ -14,10 +14,10 @@
     </button>
 
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-        <button class="p-link layout-topbar-button">
-            <i class="pi pi-user"></i>
-            <span>Profile</span>
-        </button>
+        
+        <p-button [label]="authService.userProfile.username" icon="pi pi-user" severity="secondary" />
+
+        
         <button pTooltip="Logout" tooltipPosition="bottom" class="p-link layout-topbar-button" (click)="onLogout()">
             <i class="pi pi-sign-out"></i>
             <span >Logout</span>
