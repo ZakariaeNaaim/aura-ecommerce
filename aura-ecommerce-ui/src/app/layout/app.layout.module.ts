@@ -19,6 +19,7 @@ import { AppFooterComponent } from './app-footer/app.footer.component';
 import { AppSidebarComponent } from './app-sidebar/app.sidebar.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import { ButtonModule } from 'primeng/button';
         RouterModule,
         TooltipModule,
         AppConfigModule,
-        ButtonModule
+        ButtonModule,
+        DropdownModule
     ],
     exports: [AppLayoutComponent]
 })
