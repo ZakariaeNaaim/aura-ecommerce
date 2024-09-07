@@ -20,7 +20,7 @@
         optionLabel="name"
         placeholder="Select Language" class="w-full md:w-auto mr-3"></p-dropdown>
 
-        <p-button [label]="authService.userProfile.username" icon="pi pi-user" severity="secondary" />
+        <p-button [label]="authService?.userProfile?.username" icon="pi pi-user" severity="secondary" />
 
         
         <button pTooltip="Logout" tooltipPosition="bottom" class="p-link layout-topbar-button" (click)="onLogout()">
