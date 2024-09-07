@@ -5,9 +5,10 @@
             <a class="flex align-items-center" href="#">
                 <img src="assets/layout/images/{{layoutService.config().colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg"
                     alt="Aura  Logo" height="50" class="mr-0 lg:mr-2"><span
-                    class="text-900 font-medium text-2xl line-height-3 mr-8">AURA</span>
+                    class="text-900 font-medium text-2xl line-height-3 mr-8">AURA</span> 
             </a>
-            <a pRipple class="cursor-pointer block lg:hidden text-700" pStyleClass="@next" enterClass="hidden"
+
+            <a pRipple class="cursor-pointer block lg:hidden text-700" pStyleClass="@next" enterFromClass="hidden"
                 leaveToClass="hidden" [hideOnOutsideClick]="true">
                 <i class="pi pi-bars text-4xl"></i>
             </a>
@@ -19,8 +20,11 @@
                 </ul>
                 <div
                     class="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-border py-3 lg:py-0 mt-3 lg:mt-0">
-                    <button (click)="router.navigate(['/auth/login'])" pButton pRipple label="Login" class="p-button-text p-button-rounded border-none font-light line-height-2 text-blue-500"></button>
-                    <button (click)="router.navigate(['/auth/signup'])" pButton pRipple label="Signup"
+                    <p-dropdown [options]="languages" [(ngModel)]="selectedLanguage"  (onChange)="changeLanguage($event)"
+                    optionLabel="name"
+                    placeholder="Select Language" class="w-full md:w-auto mr-3"></p-dropdown>
+                    <button (click)="router.navigate(['/auth/login'])" pButton pRipple label="{{'LANDING.LOGIN'|translate}}" class="p-button-text p-button-rounded border-none font-light line-height-2 text-blue-500"></button>
+                    <button (click)="router.navigate(['/auth/signup'])" pButton pRipple label="{{'LANDING.SIGNUP'|translate}}"
                         class="p-button-rounded border-none ml-5 font-light line-height-2 bg-blue-500 text-white"></button>
                 </div>
             </div>
@@ -30,11 +34,10 @@
             style="background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), radial-gradient(77.36% 256.97% at 77.36% 57.52%, #EEEFAF 0%, #C3E3FA 100%); clip-path: ellipse(150% 87% at 93% 13%);">
             <div class="mx-4 md:mx-8 mt-0 md:mt-4">
                 <h1 class="text-6xl font-bold text-gray-900 line-height-2">Aura  ∞</h1>
-                <p class="font-normal text-2xl line-height-3 md:mt-3 text-gray-700">Welcome to
-                    Aura , nestled in the heart of Casablanca. This app is your go-to tool for efficiently
-                    managing orders and stock, ensuring our customers enjoy the perfect ecommerce experience every time.
-                    Designed exclusively for our team, it's here to help you serve up satisfaction with ease. </p>
-                <button pButton pRippl (click)="router.navigate(['/auth/login'])" e type="button" label="Login"
+                <p class="font-normal text-2xl line-height-3 md:mt-3 text-gray-700">
+                    {{'LANDING.AURA_PARAGRAPH'|translate}}
+                </p>
+                <button pButton pRippl (click)="router.navigate(['/auth/login'])" e type="button" label="{{'LANDING.LOGIN'|translate}}"
                     class="p-button-rounded text-xl border-none mt-3 bg-blue-500 font-normal line-height-3 px-3 text-white"></button>
             </div>
             <div class="flex justify-content-center md:justify-content-end">
@@ -45,7 +48,7 @@
         <div id="features" class="py-4 px-4 lg:px-8 mt-5 mx-0 lg:mx-8">
             <div class="grid justify-content-center">
                 <div class="col-12 text-center mt-8 mb-4">
-                    <h2 class="text-900 font-normal mb-2">Core Features</h2>
+                    <h2 class="text-900 font-normal mb-2">{{'LANDING.CORE_FEATURES'|translate}}</h2>
                     <!-- <span class="text-600 text-2xl">Placerat in egestas erat...</span> -->
                 </div>
 
@@ -57,8 +60,8 @@
                                 style="width:3.5rem;height:3.5rem; border-radius:10px;">
                                 <i class="pi pi-fw pi-users text-2xl text-yellow-700"></i>
                             </div>
-                            <h5 class="mb-2 text-900">User Management</h5>
-                            <span class="text-600">Easily manage users and their roles within your ecommerce service.</span>
+                            <h5 class="mb-2 text-900">{{'LANDING.USER_MANAGEMENT' | translate}}</h5>
+                            <span class="text-600">{{'LANDING.USER_MANAGEMENT_BODY' | translate}}</span>
                         </div>
                     </div>
                 </div>
@@ -71,8 +74,8 @@
                                 style="width:3.5rem;height:3.5rem; border-radius:10px;">
                                 <i class="pi pi-fw pi-shopping-cart text-2xl text-cyan-700"></i>
                             </div>
-                            <h5 class="mb-2 text-900">Order Management</h5>
-                            <span class="text-600">Streamline order processing and ensure timely delivery.</span>
+                            <h5 class="mb-2 text-900">{{'LANDING.ORDER_MANAGEMENT'|translate}}</h5>
+                            <span class="text-600">{{'LANDING.ORDER_MANAGEMENT_BODY'|translate}}</span>
                         </div>
                     </div>
                 </div>
@@ -85,8 +88,8 @@
                                 style="width:3.5rem;height:3.5rem; border-radius:10px;">
                                 <i class="pi pi-fw pi-th-large text-2xl text-indigo-700"></i>
                             </div>
-                            <h5 class="mb-2 text-900">Menu Management</h5>
-                            <span class="text-600">Organize and update your ecommerce menu with ease.</span>
+                            <h5 class="mb-2 text-900">{{'LANDING.PRODUCTS_MANAGEMENT'|translate}}</h5>
+                            <span class="text-600">{{'LANDING.PRODUCTS_MANAGEMENT_BODY'|translate}}</span>
                         </div>
                     </div>
                 </div>
@@ -97,9 +100,7 @@
                         <h3 class="text-gray-900 mb-2"></h3>
                         <!-- <span class="text-gray-600 text-2xl">Peak Interactive</span> -->
                         <p class="text-gray-900 sm:line-height-2 md:line-height-4 text-2xl mt-4"
-                            style="max-width:800px;">“Thank you for being an essential part of Aura . Your
-                            dedication helps us deliver the best service to our customers. Together, we make every ecommerce
-                            a moment to savor!”</p>
+                            style="max-width:800px;">“{{'LANDING.FOOTER_BODY' | translate}}”</p>
                         <!-- <img src="assets/demo/images/landing/peak-logo.svg" class="mt-4" alt="Company logo"> -->
 
                     </div>

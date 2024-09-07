@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { LayoutService } from '../service/app.layout.service';
 import { MenuService } from '../app-menu/app.menu.service';
 
@@ -6,7 +6,7 @@ import { MenuService } from '../app-menu/app.menu.service';
     selector: 'app-config',
     templateUrl: './app.config.component.html',
 })
-export class AppConfigComponent {
+export class AppConfigComponent implements OnInit {
     @Input() minimal: boolean = false;
 
     scales: number[] = [12, 13, 14, 15, 16];
@@ -15,6 +15,21 @@ export class AppConfigComponent {
         public layoutService: LayoutService,
         public menuService: MenuService
     ) {}
+
+    ngOnInit() {
+        this.loadThemeAndColor();
+    }
+
+    private loadThemeAndColor() {
+        const storedTheme = localStorage.getItem('theme');
+        const storedColorScheme = localStorage.getItem('colorScheme');
+        if (storedTheme) {
+            this.theme = storedTheme;
+        }
+        if (storedColorScheme) {
+            this.colorScheme = storedColorScheme;
+        }
+    }
 
     get visible(): boolean {
         return this.layoutService.state.configSidebarVisible;
@@ -87,8 +102,11 @@ export class AppConfigComponent {
     changeTheme(theme: string, colorScheme: string) {
         this.theme = theme;
         this.colorScheme = colorScheme;
+        // Save theme and color scheme in localStorage
+        localStorage.setItem('theme', theme);
+        localStorage.setItem('colorScheme', colorScheme);
     }
-
+    
     decrementScale() {
         this.scale--;
     }

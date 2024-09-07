@@ -9,20 +9,22 @@ import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastModule } from 'primeng/toast';
+import { TranslationModule } from "../../../../shared/services/translation/translate.module";
 
 @NgModule({
     imports: [
-        CommonModule,
-        LoginRoutingModule,
-        ButtonModule,
-        CheckboxModule,
-        InputTextModule,
-        FormsModule,
-        PasswordModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        ToastModule
-    ],
+    CommonModule,
+    LoginRoutingModule,
+    ButtonModule,
+    CheckboxModule,
+    InputTextModule,
+    FormsModule,
+    PasswordModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    ToastModule,
+    TranslationModule
+],
     declarations: [LoginComponent]
 })
 export class LoginModule { }
