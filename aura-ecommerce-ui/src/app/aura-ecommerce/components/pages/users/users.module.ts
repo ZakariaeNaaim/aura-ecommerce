@@ -25,33 +25,35 @@ import { TooltipModule } from 'primeng/tooltip';
 import { OrderListModule } from 'primeng/orderlist';
 import { PickListModule } from 'primeng/picklist';
 import { DataViewModule } from 'primeng/dataview';
+import { TranslationModule } from "../../../../shared/services/translation/translate.module";
 
 @NgModule({
     imports: [
-        CommonModule,
-        UserRoutingModule,
-        TableModule,
-        FileUploadModule,
-        FormsModule,
-        ButtonModule,
-        RippleModule,
-        ToastModule,
-        ToolbarModule,
-        RatingModule,
-        InputTextModule,
-        InputTextareaModule,
-        DropdownModule,
-        RadioButtonModule,
-        InputNumberModule,
-        DialogModule,
-        ConfirmDialogModule,
-        MultiSelectModule,
-        PasswordModule ,
-        OrderListModule,
-        PickListModule,
-        TooltipModule,
-        DataViewModule
-    ],
+    CommonModule,
+    UserRoutingModule,
+    TableModule,
+    FileUploadModule,
+    FormsModule,
+    ButtonModule,
+    RippleModule,
+    ToastModule,
+    ToolbarModule,
+    RatingModule,
+    InputTextModule,
+    InputTextareaModule,
+    DropdownModule,
+    RadioButtonModule,
+    InputNumberModule,
+    DialogModule,
+    ConfirmDialogModule,
+    MultiSelectModule,
+    PasswordModule,
+    OrderListModule,
+    PickListModule,
+    TooltipModule,
+    DataViewModule,
+    TranslationModule
+],
     declarations: [UserComponent,UserDialogComponent],
     providers: [ConfirmationService, MessageService]
 
