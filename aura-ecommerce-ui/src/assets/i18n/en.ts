@@ -1,5 +1,25 @@
 export const enLanguage={
     en:'en',
+    BUTTONS :{
+        SAVE : 'Save',
+        CANCEL : 'Cancel',
+        YES : 'Yes',
+        NO : 'No'
+    },
+    APP_MENU : {
+        BY : 'by',
+        HOME : 'Home',
+        MANAGEMENT : 'Management',
+        ORDERS : 'Orders',
+        PRODUCTS : 'Products',
+        USERS : 'Users'
+    },
+    TOP_BAR :{
+        LOGOUT : 'Logout'
+    },
+    FOOTER : {
+        BY : 'by',
+    },
     LANDING :{
         LOGIN:'Login',
         SIGNUP:'Signup',
@@ -27,5 +47,45 @@ export const enLanguage={
         EMAIL_ADDRESS: 'Email Address',
         PASSWORD: 'Password',
         SIGN_UP: 'Sign Up'
-    }
+    },
+    DASHBOARD : {
+        ORDERS : 'Orders',
+        NEW: 'new',
+        SINCE_LAST_VISIT:'since last visit',
+        REVENUE:'Revenue',
+        SINCE_LAST_WEEK : 'since last week',
+        RECENT_SALES:  'Recent Sales',
+        IMAGE : 'Image',
+        NAME : 'Name',
+        PRICE : 'Price',
+        VIEW : 'View',
+        SALES_OVERVIEW : 'Sales Overview'
+    },
+    USERS : {
+        USER_MANAGEMENT : 'User Management',
+        ROLES : 'Roles' ,
+        ERROR_GETTING_USERS: 'error while getting Users',
+        USER_DELETED : 'user deleted',
+        CANT_DELETE_USER : "can't delete user",
+        DO_YOU_WANT_DELETE_USER : 'Do you want to delete this user?',
+        DELETE_CONFIRMATION :'Delete Confirmation',
+        YOU_HAVE_REJECTED :'You have rejected',
+        USER_UPDATED : 'user updated',
+        CANT_UPDATE_USER : "can't update user",
+        USER_CREATED : 'user created',
+        CANT_CREATE_USER : "can't create user",
+        USER_DIALOG : {
+            USER_DETAILS : 'User Details' ,
+            USER_NAME : 'User Name',
+            USER_NAME_IS_REQUIRED : 'Username is required.',
+            EMAIL : 'Email',
+            EMAIL_IS_REQUIRED:'Email is required.',
+            PASSWORD : 'Password',
+            PASSWOD_IS_REQUIRED : 'Password is required.',
+            ROLES : 'Roles'
+        },
+        ADD_USER : 'Add User'
+    },
+    
+    
 }
