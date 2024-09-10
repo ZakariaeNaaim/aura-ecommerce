@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
-@Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor
+@Getter @Setter @Builder @ToString @AllArgsConstructor @NoArgsConstructor
 public class Order implements Serializable {
     @Id
     private UUID Id;

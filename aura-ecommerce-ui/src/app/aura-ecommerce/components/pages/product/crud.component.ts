@@ -3,6 +3,7 @@ import { Product } from 'src/app/aura-ecommerce/models/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/aura-ecommerce/service/product.service';
+import { Category } from 'src/app/aura-ecommerce/models/category';
 
 @Component({
     templateUrl: './crud.component.html',
@@ -17,6 +18,7 @@ export class CrudComponent implements OnInit {
     deleteProductsDialog: boolean = false;
 
     products: Product[] = [];
+    categories: Category[] = [];
 
     product: Product = {};
 
@@ -48,6 +50,13 @@ export class CrudComponent implements OnInit {
             { label: 'LOWSTOCK', value: 'lowstock' },
             { label: 'OUTOFSTOCK', value: 'outofstock' }
         ];
+        this.productService.getCategories().subscribe({
+            next:(result)=>{
+                this.categories = result.data;
+            },error:()=>{
+
+            }
+        });
     }
 
     openNew() {
@@ -89,6 +98,12 @@ export class CrudComponent implements OnInit {
         this.submitted = false;
     }
 
+    onFileChange(event: any) {
+        const file = event.target.files[0];
+        if (file) {
+          this.product.image = file;
+        }
+      }
     saveProduct() {
         this.submitted = true;
 
@@ -101,10 +116,11 @@ export class CrudComponent implements OnInit {
             } else {
                 this.product.id = this.createId();
                 this.product.code = this.createId();
-                this.product.image = 'product-placeholder.svg';
+                this.product.categoryId = Number(this.product.categoryId)??null;
                 // @ts-ignore
                 this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
                 this.products.push(this.product);
+                this.productService.saveProduct(this.product).subscribe();
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
             }
 

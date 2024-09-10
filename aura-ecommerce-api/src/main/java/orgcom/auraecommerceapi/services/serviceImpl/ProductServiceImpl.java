@@ -1,13 +1,17 @@
 package orgcom.auraecommerceapi.services.serviceImpl;
 
 import org.springframework.stereotype.Service;
-import orgcom.auraecommerceapi.entities.Order;
-import orgcom.auraecommerceapi.entities.Product;
-import orgcom.auraecommerceapi.repositories.OrderRepository;
-import orgcom.auraecommerceapi.repositories.ProductRepository;
+import org.springframework.web.multipart.MultipartFile;
+import orgcom.auraecommerceapi.dtos.ProductRequestDto;
+import orgcom.auraecommerceapi.entities.*;
+import orgcom.auraecommerceapi.mappers.ProductMapper;
+import orgcom.auraecommerceapi.repositories.*;
 import orgcom.auraecommerceapi.services.fasad.ProductService;
 import orgcom.auraecommerceapi.shared.ResponseGenericResult;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -16,16 +20,56 @@ public class ProductServiceImpl implements ProductService {
 
     private Logger logger = Logger.getLogger(this.getClass().getName());
     private ProductRepository _productRepository;
+    private CategoryRepository _categoryRepository;
+    private FileTypeRepository _fileTypeRepository;
+    private FileRepository _fileRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    private ProductMapper _productMapper;
+
+    public ProductServiceImpl(ProductRepository productRepository,ProductMapper productMapper
+                ,CategoryRepository categoryRepository,FileTypeRepository fileTypeRepository,FileRepository fileRepository) {
         this._productRepository = productRepository;
+        this._categoryRepository = categoryRepository;
+        this._productMapper = productMapper;
+        this._fileTypeRepository = fileTypeRepository;
+        this._fileRepository = fileRepository;
     }
 
     @Override
-    public ResponseGenericResult<Boolean> saveProduct(Product product) {
-        logger.info("methode executing saveProduct "+ product.getName());
+    public ResponseGenericResult<Boolean> saveProduct(ProductRequestDto productRequestDto, MultipartFile image) {
+        logger.info("methode executing saveProduct "+ productRequestDto.getName());
         try {
+            Product product = _productMapper.toProduct(productRequestDto);
+            Optional<Category> category = _categoryRepository.findById(productRequestDto.getCategoryId());
             product.setId( UUID.randomUUID());
+            if(category.isPresent()) {
+                product.setCategory(category.get());
+            }else {
+                throw new RuntimeException("Category not found");
+            }
+            if(!image.isEmpty()){
+                try {
+                    byte[] imageBytes = image.getBytes();
+                    FileType fileType = _fileTypeRepository.findByLibelle(image.getName().substring(
+                            image.getOriginalFilename().lastIndexOf(".") + 1
+                    ).toLowerCase());
+                    File file = File.builder()
+                            .id(UUID.randomUUID())
+                            .addedBy("mouhcine")
+                            .addedOn(new Date())
+                            .content(imageBytes)
+                            .fileType(fileType).build();
+                    File savedFile = _fileRepository.save(file);
+                    if(savedFile != null) {
+                        product.setProductImage(file);
+                    }else {
+                        throw new RuntimeException("Failed to save file");
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to read image file");
+                }
+            }
+
             Product savedProduct = _productRepository.save(product);
             if(savedProduct != null) {
                 return new ResponseGenericResult<Boolean>(true, "product saved successfully");
@@ -35,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
         }catch (Exception e){
             throw new RuntimeException();
         }finally {
-            logger.info("methode executed saveProduct "+ product.getName());
+            logger.info("methode executed saveProduct "+ productRequestDto.getName());
         }
     }
 }

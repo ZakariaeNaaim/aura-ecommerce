@@ -25,7 +25,7 @@ export class AppMenuComponent implements OnInit {
                 label: 'Management',
                 items: [
                     ...(this.authService.userProfile.role.includes('ROLE_ORDERS') ? [{ label: 'Orders', icon: 'pi pi-fw pi-shopping-cart', routerLink: ['/pages/orders'] }] : []),
-                    ...(this.authService.userProfile.role.includes('ROLE_PRODUCTS') ? [{ label: 'Products', icon: 'pi pi-fw pi-bars', routerLink: ['/pages/menu']}] : []),
+                    ...(this.authService.userProfile.role.includes('ROLE_PRODUCTS') ? [{ label: 'Products', icon: 'pi pi-fw pi-bars', routerLink: ['/pages/product']}] : []),
                     ...(this.authService.userProfile.role.includes('ROLE_USERS') ? [{label: 'Users', icon: 'pi pi-fw pi-users', routerLink: ['/pages/users']  }] : []),
                 ]
             },

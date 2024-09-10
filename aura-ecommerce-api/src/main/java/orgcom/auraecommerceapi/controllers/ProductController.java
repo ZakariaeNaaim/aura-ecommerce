@@ -1,11 +1,13 @@
 package orgcom.auraecommerceapi.controllers;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import orgcom.auraecommerceapi.dtos.ProductRequestDto;
 import orgcom.auraecommerceapi.entities.Order;
+import orgcom.auraecommerceapi.entities.Product;
+import orgcom.auraecommerceapi.mappers.ProductMapper;
 import orgcom.auraecommerceapi.services.fasad.OrderService;
+import orgcom.auraecommerceapi.services.fasad.ProductService;
 import orgcom.auraecommerceapi.shared.ResponseGenericResult;
 
 import java.util.List;
@@ -14,14 +16,22 @@ import java.util.List;
 @RequestMapping("/products")
 @RestController
 public class ProductController {
-    private OrderService _orderService;
-    public ProductController(OrderService orderService) {
+    private final ProductMapper productMapper;
+    private ProductService _productService;
+    public ProductController(ProductService productService, ProductMapper productMapper) {
 
-        _orderService = orderService;
+        _productService = productService;
+        this.productMapper = productMapper;
     }
 
-    @GetMapping("getProducts")
-    public ResponseGenericResult<List<Order>> getOrders() {
-        return _orderService.getAllOrders() ;
+    @GetMapping("/getProducts")
+    public void getOrders() {
+
+    }
+    @PostMapping("/saveProduct")
+    public ResponseGenericResult<Boolean> getOrders(@ModelAttribute ProductRequestDto productRequestDto,
+                                                        @RequestParam("image") MultipartFile image) {
+        ResponseGenericResult<Boolean> result = _productService.saveProduct(productRequestDto,image);
+        return result;
     }
 }

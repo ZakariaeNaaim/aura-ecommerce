@@ -73,6 +73,8 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/api/auth/**").permitAll()
                             .requestMatchers("/orders/**").hasAuthority("ROLE_ORDERS")
                             .requestMatchers("/users/**","/users").hasAuthority("ROLE_USERS")
+                            .requestMatchers("/products/**").permitAll()
+                            .requestMatchers("/categories/**").permitAll()
                             .anyRequest().authenticated()
             );
 

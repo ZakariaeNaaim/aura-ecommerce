@@ -7,13 +7,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Getter
-@Setter @ToString @AllArgsConstructor @NoArgsConstructor
+@Setter @Builder @ToString @AllArgsConstructor @NoArgsConstructor
 public class File implements Serializable {
     @Id
-    private int id;
+    private UUID id;
     @Lob
     private byte[] content;
     private String fileName;
