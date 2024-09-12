@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
 import { SidebarModule } from 'primeng/sidebar';
@@ -19,9 +19,10 @@ import { AppFooterComponent } from './app-footer/app.footer.component';
 import { AppSidebarComponent } from './app-sidebar/app.sidebar.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { TranslationModule } from "../shared/services/translation/translate.module";
 
-@NgModule({
-    declarations: [
+@NgModule({ declarations: [
         AppMenuitemComponent,
         AppTopBarComponent,
         AppFooterComponent,
@@ -29,22 +30,18 @@ import { ButtonModule } from 'primeng/button';
         AppSidebarComponent,
         AppLayoutComponent,
     ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        InputTextModule,
-        SidebarModule,
-        BadgeModule,
-        RadioButtonModule,
-        InputSwitchModule,
-        RippleModule,
-        RouterModule,
-        TooltipModule,
-        AppConfigModule,
-        ButtonModule
-    ],
-    exports: [AppLayoutComponent]
-})
+    exports: [AppLayoutComponent], imports: [BrowserModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    InputTextModule,
+    SidebarModule,
+    BadgeModule,
+    RadioButtonModule,
+    InputSwitchModule,
+    RippleModule,
+    RouterModule,
+    TooltipModule,
+    AppConfigModule,
+    ButtonModule,
+    DropdownModule, TranslationModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppLayoutModule { }

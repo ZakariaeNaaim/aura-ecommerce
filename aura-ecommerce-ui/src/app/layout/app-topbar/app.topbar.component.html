@@ -15,10 +15,15 @@
 
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
         
-        <p-button [label]="authService.userProfile.username" icon="pi pi-user" severity="secondary" />
+        <p-dropdown 
+        [options]="languages" [(ngModel)]="selectedLanguage"  (onChange)="changeLanguage($event)"
+        optionLabel="name"
+        placeholder="Select Language" class="w-full md:w-auto mr-3"></p-dropdown>
+
+        <p-button [label]="authService?.userProfile?.username" icon="pi pi-user" severity="secondary" />
 
         
-        <button pTooltip="Logout" tooltipPosition="bottom" class="p-link layout-topbar-button" (click)="onLogout()">
+        <button pTooltip="{{'TOP_BAR.LOGOUT' | translate}}" tooltipPosition="bottom" class="p-link layout-topbar-button" (click)="onLogout()">
             <i class="pi pi-sign-out"></i>
             <span >Logout</span>
         </button>

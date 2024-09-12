@@ -7,12 +7,11 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ToastModule } from 'primeng/toast';
+import { TranslationModule } from "../../../../shared/services/translation/translate.module";
 
-@NgModule({
-    imports: [
-        CommonModule,
+@NgModule({ declarations: [LoginComponent], imports: [CommonModule,
         LoginRoutingModule,
         ButtonModule,
         CheckboxModule,
@@ -20,9 +19,6 @@ import { ToastModule } from 'primeng/toast';
         FormsModule,
         PasswordModule,
         ReactiveFormsModule,
-        HttpClientModule,
-        ToastModule
-    ],
-    declarations: [LoginComponent]
-})
+        ToastModule,
+        TranslationModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class LoginModule { }

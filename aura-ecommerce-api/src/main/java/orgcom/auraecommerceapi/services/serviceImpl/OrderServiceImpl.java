@@ -7,7 +7,13 @@ import orgcom.auraecommerceapi.repositories.OrderRepository;
 import orgcom.auraecommerceapi.services.fasad.OrderService;
 import orgcom.auraecommerceapi.shared.ResponseGenericResult;
 
+import javax.xml.crypto.Data;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 @Service
@@ -21,8 +27,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseGenericResult<Boolean> saveOrder(Order order) {
-        logger.info("save command");
+        logger.info("save Order "+ order.getReference());
         try {
+            order.setId( UUID.randomUUID());
             Order saved = _orderRepository.save(order);
             if(saved != null) {
                 return new ResponseGenericResult<Boolean>(true, "command saved successfully");
@@ -37,10 +44,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseGenericResult<Order> getOrder(String commandReference) {
-        logger.info("Executing methode  getCommand by reference: " + commandReference);
+    public ResponseGenericResult<Order> getOrder(String orderReference) {
+        logger.info("Executing methode  getCommand by reference: " + orderReference);
         try {
-            Order order = _orderRepository.findCommandByReference(commandReference);
+            Order order = _orderRepository.findOrderByReference(orderReference);
             if(order != null) {
                 return new ResponseGenericResult<Order>(order);
             }
@@ -53,25 +60,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrders() {
-        return _orderRepository.findAll();
-    }
-
-    @Override
-    public ResponseGenericResult<Order> annullateOrder(OrderEtatEnum orderEtatEnum) {
-        logger.info("Executing methode  annullateCommand by etat: " + orderEtatEnum);
+    public ResponseGenericResult<List<Order>> getAllOrders() {
+        logger.info("Executing methode  getAllOrders" );
         try {
-            Order order = _orderRepository.findOrderByEtat(OrderEtatEnum.ANNULE);
-            if(order != null) {
-                return new ResponseGenericResult<Order>(order);
-            }
-            return new ResponseGenericResult<Order>(null);
-        }catch (Exception e){
+            return new ResponseGenericResult<>(_orderRepository.findAll());
+        }catch (Exception ex){
             throw new RuntimeException();
         }finally {
-            logger.info("methode executed; annullateCommand");
+            logger.info("methode Executed  getAllOrders" );
         }
     }
+
 
     @Override
     public ResponseGenericResult<List<Order>> getAnnulatedOrders() {
@@ -86,6 +85,21 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException();
         }finally {
             logger.info("methode executed; getAnnulatedCommands");
+        }
+    }
+
+    @Override
+    public ResponseGenericResult<List<Order>> getOrdersByDate(String StringOrderDate) {
+        logger.info("Executing methode  getOrderByDate" );
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy", Locale.FRENCH);
+            Date orderDate = formatter.parse(StringOrderDate);
+            List<Order> ordersByOrderDate = _orderRepository.findOrdersByOrderDate(orderDate);
+            return  new ResponseGenericResult<>(ordersByOrderDate);
+        }catch (Exception ex){
+            throw new RuntimeException();
+        }finally {
+            logger.info("methode Executed  getOrdersByDate" );
         }
     }
 }
