@@ -20,6 +20,7 @@ import { AppSidebarComponent } from './app-sidebar/app.sidebar.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { TranslationModule } from "../shared/services/translation/translate.module";
 
 @NgModule({ declarations: [
         AppMenuitemComponent,
@@ -30,17 +31,17 @@ import { DropdownModule } from 'primeng/dropdown';
         AppLayoutComponent,
     ],
     exports: [AppLayoutComponent], imports: [BrowserModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        InputTextModule,
-        SidebarModule,
-        BadgeModule,
-        RadioButtonModule,
-        InputSwitchModule,
-        RippleModule,
-        RouterModule,
-        TooltipModule,
-        AppConfigModule,
-        ButtonModule,
-        DropdownModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+    FormsModule,
+    BrowserAnimationsModule,
+    InputTextModule,
+    SidebarModule,
+    BadgeModule,
+    RadioButtonModule,
+    InputSwitchModule,
+    RippleModule,
+    RouterModule,
+    TooltipModule,
+    AppConfigModule,
+    ButtonModule,
+    DropdownModule, TranslationModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppLayoutModule { }

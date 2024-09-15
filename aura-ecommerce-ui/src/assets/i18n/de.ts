@@ -1,5 +1,24 @@
 export const deLanguage={
     de:'de',
+    BUTTONS :{
+        SAVE: 'Speichern',
+        CANCEL: 'Abbrechen',
+        YES : 'Ja',
+        NO : 'Nein'
+    },
+    APP_MENU: {
+        HOME: 'Startseite',
+        MANAGEMENT: 'Verwaltung',
+        ORDERS: 'Bestellungen',
+        PRODUCTS: 'Produkte',
+        USERS: 'Benutzer'
+    },
+    TOP_BAR :{
+        LOGOUT : 'Abmelden'
+    },
+    FOOTER : {
+        BY : 'von',
+    },
     LANDING :{
         LOGIN :'Anmelden',
         SIGNUP :'Neues Konto erstellen',
@@ -27,6 +46,44 @@ export const deLanguage={
         EMAIL_ADDRESS: 'E-Mail-Adresse',
         PASSWORD: 'Passwort',
         SIGN_UP: 'Registrieren'
+    },
+    DASHBOARD: {
+        ORDERS: 'Bestellungen',
+        NEW: 'neu',
+        SINCE_LAST_VISIT: 'seit letztem Besuch',
+        REVENUE: 'Umsatz',
+        SINCE_LAST_WEEK: 'seit letzter Woche',
+        RECENT_SALES: 'Neueste Verkäufe',
+        IMAGE: 'Bild',
+        NAME: 'Name',
+        PRICE: 'Preis',
+        VIEW: 'Ansehen',
+        SALES_OVERVIEW: 'Verkaufsübersicht'
+    },
+    USERS: {
+        USER_MANAGEMENT: 'Benutzerverwaltung',
+        ROLES: 'Rollen',
+        ERROR_GETTING_USERS: 'Fehler beim Abrufen der Benutzer',
+        USER_DELETED: 'Benutzer gelöscht',
+        CANT_DELETE_USER: 'Benutzer kann nicht gelöscht werden',
+        DO_YOU_WANT_DELETE_USER: 'Möchten Sie diesen Benutzer löschen?',
+        DELETE_CONFIRMATION: 'Löschbestätigung',
+        YOU_HAVE_REJECTED: 'Sie haben abgelehnt',
+        USER_UPDATED: 'Benutzer aktualisiert',
+        CANT_UPDATE_USER: 'Benutzer kann nicht aktualisiert werden',
+        USER_CREATED: 'Benutzer erstellt',
+        CANT_CREATE_USER: 'Benutzer kann nicht erstellt werden',
+        USER_DIALOG: {
+            USER_DETAILS : 'Benutzerdetails' ,
+            USER_NAME: 'Benutzername',
+            USER_NAME_IS_REQUIRED: 'Benutzername ist erforderlich.',
+            EMAIL: 'E-Mail',
+            EMAIL_IS_REQUIRED: 'E-Mail ist erforderlich.',
+            PASSWORD: 'Passwort',
+            PASSWORD_IS_REQUIRED: 'Passwort ist erforderlich.',
+            ROLES: 'Rollen'
+        },
+        ADD_USER: 'Benutzer hinzufügen'
     }
-    
+   
 }

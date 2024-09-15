@@ -3,6 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuraUser } from './models/aura-user.model';
 import { UserManagementService } from './services/user-management.service';
 import { AuthService } from 'src/app/aura-ecommerce/auth/services/auth.service';
+import { TranslationService } from 'src/app/shared/services/translation/translate.service';
 
 @Component({
   templateUrl: './users.component.html',
@@ -18,7 +19,8 @@ export class UserComponent implements OnInit {
   isEditing: boolean = false;
 
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
-    private userManagementService: UserManagementService,private authService:AuthService
+    private userManagementService: UserManagementService,private authService:AuthService,
+    private translationService: TranslationService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class UserComponent implements OnInit {
           this.users =res;
         },
         error :()=>{
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'error while getting Users' });
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: this.translationService.translate('USERS.ERROR_GETTING_USERS') });
         }
       }
     )
@@ -75,11 +77,11 @@ export class UserComponent implements OnInit {
       next:(res)=>{
         if(res){
           this.users = this.users.filter(u => u.id !== user.id);
-          this.messageService.add({ severity: 'success ', summary: 'Confirmed', detail: 'user deleted' });
+          this.messageService.add({ severity: 'success ', summary: 'Confirmed', detail: this.translationService.translate('USERS.USER_DELETED') });
         }
       },
       error:()=>{
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: "can't delete user" });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail:this.translationService.translate('USERS.CANT_DELETE_USER') });
       }
     })
     
@@ -88,19 +90,21 @@ export class UserComponent implements OnInit {
   openConfirmDialog(event: Event, user: AuraUser) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Do you want to delete this user?',
-      header: 'Delete Confirmation',
+      message:this.translationService.translate('USERS.DO_YOU_WANT_DELETE_USER') ,
+      header: this.translationService.translate('USERS.DELETE_CONFIRMATION'),
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: "p-button-danger p-button-text",
       rejectButtonStyleClass: "p-button-text p-button-text",
       acceptIcon: "none",
       rejectIcon: "none",
+      acceptLabel : this.translationService.translate('BUTTONS.YES'),
+      rejectLabel : this.translationService.translate('BUTTONS.NO'),
 
       accept: () => {
         this.deleteUser(user);
       },
       reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: this.translationService.translate('USERS.YOU_HAVE_REJECTED') });
       }
     });
   }
@@ -110,11 +114,11 @@ export class UserComponent implements OnInit {
       next:(res)=>{
         if(res){
           this.users = this.users.map(u => u.id === user.id ? user : u);
-          this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'user updated' });
+          this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: this.translationService.translate('USERS.USER_UPDATED')});
         }
       },
       error:()=>{
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: "can't update user" });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: this.translationService.translate('USERS.CANT_UPDATE_USER') });
       }
     });
   }
@@ -127,12 +131,12 @@ export class UserComponent implements OnInit {
       next:(res)=>{
         if(res){
           this.users.push(user);
-          this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'user created' });
+          this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: this.translationService.translate('USERS.USER_CREATED') });
           this.loadUsers();
         }
       },
       error:()=>{
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: "can't create user" });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: this.translationService.translate('USERS.CANT_CREATE_USER') });
       }
     });
   }
