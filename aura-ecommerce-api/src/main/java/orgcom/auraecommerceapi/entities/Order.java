@@ -14,7 +14,8 @@ import java.util.UUID;
 @Getter @Setter @Builder @ToString @AllArgsConstructor @NoArgsConstructor
 public class Order implements Serializable {
     @Id
-    private UUID Id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
     private String reference;
     private double totalCommand;
     @Enumerated(EnumType.STRING)

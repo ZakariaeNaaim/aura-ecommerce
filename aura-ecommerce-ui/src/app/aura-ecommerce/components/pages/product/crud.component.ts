@@ -35,7 +35,7 @@ export class CrudComponent implements OnInit {
     constructor(private productService: ProductService, private messageService: MessageService) { }
 
     ngOnInit() {
-        this.productService.getProducts().then(data => this.products = data);
+        // this.productService.getProducts().then(data => this.products = data);
 
         this.cols = [
             { field: 'product', header: 'Product' },
@@ -53,6 +53,13 @@ export class CrudComponent implements OnInit {
         this.productService.getCategories().subscribe({
             next:(result)=>{
                 this.categories = result.data;
+            },error:()=>{
+
+            }
+        });
+        this.productService.getProducts().subscribe({
+            next:(result)=>{
+                this.products = result.data;
             },error:()=>{
 
             }

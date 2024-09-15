@@ -21,7 +21,7 @@ public class CategoryController {
         _categoryService = categoryService;
     }
 
-    @GetMapping("/getProducts")
+    @GetMapping("/getAllCategories")
     public ResponseGenericResult<List<Category>> getAllCategories() {
         return _categoryService.getAllCategories();
     }

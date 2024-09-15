@@ -25,11 +25,11 @@ public class ProductController {
     }
 
     @GetMapping("/getProducts")
-    public void getOrders() {
-
+    public ResponseGenericResult<List<Product>> getProducts() {
+        return  _productService.getAllProducts();
     }
     @PostMapping("/saveProduct")
-    public ResponseGenericResult<Boolean> getOrders(@ModelAttribute ProductRequestDto productRequestDto,
+    public ResponseGenericResult<Boolean> saveProduct(@ModelAttribute ProductRequestDto productRequestDto,
                                                         @RequestParam("image") MultipartFile image) {
         ResponseGenericResult<Boolean> result = _productService.saveProduct(productRequestDto,image);
         return result;

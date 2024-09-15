@@ -11,6 +11,7 @@ import orgcom.auraecommerceapi.shared.ResponseGenericResult;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -41,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             Product product = _productMapper.toProduct(productRequestDto);
             Optional<Category> category = _categoryRepository.findById(productRequestDto.getCategoryId());
-            product.setId( UUID.randomUUID());
+
             if(category.isPresent()) {
                 product.setCategory(category.get());
             }else {
@@ -50,11 +51,11 @@ public class ProductServiceImpl implements ProductService {
             if(!image.isEmpty()){
                 try {
                     byte[] imageBytes = image.getBytes();
-                    FileType fileType = _fileTypeRepository.findByLibelle(image.getName().substring(
+                    FileType fileType = _fileTypeRepository.findByLibelle(image.getOriginalFilename().substring(
                             image.getOriginalFilename().lastIndexOf(".") + 1
                     ).toLowerCase());
                     File file = File.builder()
-                            .id(UUID.randomUUID())
+                            .fileName(image.getOriginalFilename())
                             .addedBy("mouhcine")
                             .addedOn(new Date())
                             .content(imageBytes)
@@ -80,6 +81,19 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException();
         }finally {
             logger.info("methode executed saveProduct "+ productRequestDto.getName());
+        }
+    }
+
+    @Override
+    public ResponseGenericResult<List<Product>> getAllProducts() {
+        logger.info("methode executing getAllProducts ");
+        try {
+            List<Product> products = _productRepository.findAll();
+            return new ResponseGenericResult<>(products);
+        }catch (Exception ex){
+            throw new RuntimeException("Failed to get products");
+        }finally {
+            logger.info("methode executed getAllProducts ");
         }
     }
 }

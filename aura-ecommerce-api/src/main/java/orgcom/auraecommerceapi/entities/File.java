@@ -14,7 +14,8 @@ import java.util.UUID;
 @Setter @Builder @ToString @AllArgsConstructor @NoArgsConstructor
 public class File implements Serializable {
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Lob
     private byte[] content;
     private String fileName;

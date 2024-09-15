@@ -23,7 +23,7 @@ export class ProductService {
         return this.http.post(url,formData);
     }
     getCategories(): Observable<any>{
-        const url = `http://localhost:8089/categories/getProducts`;
+        const url = `http://localhost:8089/categories/getAllCategories`;
         return this.http.get(url);
     }
     getProductsSmall() {
@@ -33,11 +33,14 @@ export class ProductService {
             .then(data => data);
     }
 
-    getProducts() {
-        return this.http.get<any>('assets/demo/data/products.json')
-            .toPromise()
-            .then(res => res.data as Product[])
-            .then(data => data);
+    getProducts(): Observable<any>{
+        const url = `http://localhost:8089/products/getProducts`;
+        return this.http.get(url);
+        
+        // return this.http.get<any>('assets/demo/data/products.json')
+        //     .toPromise()
+        //     .then(res => res.data as Product[])
+        //     .then(data => data);
     }
 
     getProductsMixed() {

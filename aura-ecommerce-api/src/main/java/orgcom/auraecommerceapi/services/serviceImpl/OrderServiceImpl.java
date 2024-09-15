@@ -29,7 +29,6 @@ public class OrderServiceImpl implements OrderService {
     public ResponseGenericResult<Boolean> saveOrder(Order order) {
         logger.info("save Order "+ order.getReference());
         try {
-            order.setId( UUID.randomUUID());
             Order saved = _orderRepository.save(order);
             if(saved != null) {
                 return new ResponseGenericResult<Boolean>(true, "command saved successfully");
