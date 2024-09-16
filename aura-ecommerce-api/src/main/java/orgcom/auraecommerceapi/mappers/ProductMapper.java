@@ -11,6 +11,7 @@ public class ProductMapper {
             return new Product();
         }
         return Product.builder()
+                                .id(request.getId())
                                 .name(request.getName())
                                 .price(request.getPrice())
                                 .quantity(request.getQuantity())

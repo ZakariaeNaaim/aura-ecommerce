@@ -86,6 +86,27 @@ export const enLanguage={
         },
         ADD_USER : 'Add User'
     },
+    PRODUCTS : {
+        PRODUCT_UPDATED : 'Product updated',
+        CANT_UPDATE_PRODUCT :"Product can't be updated",
+        PRODUCT_CREATED : 'Product created',
+        CANT_CREATE_PRODUCT :"Product can't be created",
+        PRODUCT_DELETED : 'Product deleted',
+        CANT_DELETE_PRODUCT : "can't delete Product",
+        MANAGE_PRODUCT : 'Manage Products',
+        CODE : 'Code',
+        NAME : 'Name',
+        NAME_IS_REQUIRED : 'Name is required.',
+        IMAGE : 'Image',
+        PRICE : 'Price',
+        CATEGORY : 'Category',
+        REVIEWS : 'Reviews',
+        STATUS : 'Status',
+        DESCRIPTION : 'Description',
+        INVENTORY_STATUS : 'Inventory Status',
+        THERE_ARE_NO_ITEMS : 'There are no items.',
+        QUANTITY : 'Quantity'        
+    }
     
     
 }

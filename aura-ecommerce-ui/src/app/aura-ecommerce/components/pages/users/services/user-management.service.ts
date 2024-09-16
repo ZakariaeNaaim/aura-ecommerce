@@ -28,4 +28,5 @@ export class UserManagementService {
 
   deleteUser(id: number): Observable<ResponseGenericResult<boolean>> {
     return this.http.delete<ResponseGenericResult<boolean>>(`${this.baseUrl}/${id}`);
-  }}
+  }
+}

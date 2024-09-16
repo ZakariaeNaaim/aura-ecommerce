@@ -1,5 +1,6 @@
 package orgcom.auraecommerceapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import orgcom.auraecommerceapi.enums.ProductStatus;
@@ -24,6 +25,8 @@ public class Product implements Serializable {
     private Double quantity;
     @Enumerated(EnumType.STRING)
     private ProductStatus productStatus;
+
+    @JsonIgnore
     @ManyToOne
     private File productImage;
     @ManyToOne

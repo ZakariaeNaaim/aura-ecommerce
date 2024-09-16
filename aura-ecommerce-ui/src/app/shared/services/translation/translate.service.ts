@@ -43,7 +43,7 @@ export class TranslationService {
 
     // Method to check if any language exists
     anyLanguageExists(): boolean {
-        return Object.keys(dictionary).length > 0;
+        return  localStorage.getItem("currentLanguage") !== null;
     }
 }
 

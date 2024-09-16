@@ -1,5 +1,6 @@
 package orgcom.auraecommerceapi.services.serviceImpl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import orgcom.auraecommerceapi.dtos.ProductRequestDto;
@@ -10,90 +11,115 @@ import orgcom.auraecommerceapi.services.fasad.ProductService;
 import orgcom.auraecommerceapi.shared.ResponseGenericResult;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.logging.Logger;
+import java.util.*;
 
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
-    private Logger logger = Logger.getLogger(this.getClass().getName());
-    private ProductRepository _productRepository;
-    private CategoryRepository _categoryRepository;
-    private FileTypeRepository _fileTypeRepository;
-    private FileRepository _fileRepository;
+    private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final FileTypeRepository fileTypeRepository;
+    private final FileRepository fileRepository;
+    private final ProductMapper productMapper;
 
-    private ProductMapper _productMapper;
-
-    public ProductServiceImpl(ProductRepository productRepository,ProductMapper productMapper
-                ,CategoryRepository categoryRepository,FileTypeRepository fileTypeRepository,FileRepository fileRepository) {
-        this._productRepository = productRepository;
-        this._categoryRepository = categoryRepository;
-        this._productMapper = productMapper;
-        this._fileTypeRepository = fileTypeRepository;
-        this._fileRepository = fileRepository;
+    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper,
+                              CategoryRepository categoryRepository, FileTypeRepository fileTypeRepository,
+                              FileRepository fileRepository) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+        this.productMapper = productMapper;
+        this.fileTypeRepository = fileTypeRepository;
+        this.fileRepository = fileRepository;
     }
 
     @Override
     public ResponseGenericResult<Boolean> saveProduct(ProductRequestDto productRequestDto, MultipartFile image) {
-        logger.info("methode executing saveProduct "+ productRequestDto.getName());
-        try {
-            Product product = _productMapper.toProduct(productRequestDto);
-            Optional<Category> category = _categoryRepository.findById(productRequestDto.getCategoryId());
-
-            if(category.isPresent()) {
-                product.setCategory(category.get());
-            }else {
-                throw new RuntimeException("Category not found");
-            }
-            if(!image.isEmpty()){
-                try {
-                    byte[] imageBytes = image.getBytes();
-                    FileType fileType = _fileTypeRepository.findByLibelle(image.getOriginalFilename().substring(
-                            image.getOriginalFilename().lastIndexOf(".") + 1
-                    ).toLowerCase());
-                    File file = File.builder()
-                            .fileName(image.getOriginalFilename())
-                            .addedBy("mouhcine")
-                            .addedOn(new Date())
-                            .content(imageBytes)
-                            .fileType(fileType).build();
-                    File savedFile = _fileRepository.save(file);
-                    if(savedFile != null) {
-                        product.setProductImage(file);
-                    }else {
-                        throw new RuntimeException("Failed to save file");
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException("Failed to read image file");
-                }
-            }
-
-            Product savedProduct = _productRepository.save(product);
-            if(savedProduct != null) {
-                return new ResponseGenericResult<Boolean>(true, "product saved successfully");
-            }
-            return new ResponseGenericResult<Boolean>(false, "product is not saved");
-
-        }catch (Exception e){
-            throw new RuntimeException();
-        }finally {
-            logger.info("methode executed saveProduct "+ productRequestDto.getName());
-        }
+        log.info("Executing saveProduct for: {}", productRequestDto.getName());
+        return handleProductSaveOrUpdate(productRequestDto, image, false);
     }
 
     @Override
     public ResponseGenericResult<List<Product>> getAllProducts() {
-        logger.info("methode executing getAllProducts ");
+        log.info("Executing getAllProducts");
         try {
-            List<Product> products = _productRepository.findAll();
+            List<Product> products = productRepository.findAll();
             return new ResponseGenericResult<>(products);
-        }catch (Exception ex){
-            throw new RuntimeException("Failed to get products");
-        }finally {
-            logger.info("methode executed getAllProducts ");
+        } catch (Exception e) {
+            log.error("Error retrieving all products", e);
+            throw new RuntimeException("Failed to get products", e);
+        } finally {
+            log.info("Executed getAllProducts");
         }
+    }
+
+    @Override
+    public ResponseGenericResult<Boolean> updateProduct(ProductRequestDto productRequestDto, MultipartFile image) {
+        log.info("Executing updateProduct for: {}", productRequestDto.getName());
+        return handleProductSaveOrUpdate(productRequestDto, image, true);
+    }
+
+    @Override
+    public ResponseGenericResult<Boolean> deleteProduct(ArrayList<Long> ids) {
+        try {
+            ids.forEach(productRepository::deleteById);
+
+            log.info("Products deleted successfully with IDs: {}", ids);
+            return new ResponseGenericResult<>(true, "Products deleted successfully.");
+        } catch (Exception e) {
+            log.error("Error deleting products with IDs: {}", ids, e);
+            return new ResponseGenericResult<>(false, "Failed to delete products.");
+        }
+    }
+
+
+    private ResponseGenericResult<Boolean> handleProductSaveOrUpdate(ProductRequestDto productRequestDto, MultipartFile image, boolean isUpdate) {
+        try {
+            Product product;
+            if (isUpdate) {
+                if (!productRepository.existsById(productRequestDto.getId())) {
+                    throw new RuntimeException("Product not found");
+                }
+            }
+            product = productMapper.toProduct(productRequestDto);
+
+            Category category = categoryRepository.findById(productRequestDto.getCategoryId())
+                    .orElseThrow(() -> new RuntimeException("Category not found"));
+            product.setCategory(category);
+
+            if (!image.isEmpty()) {
+                File savedFile = saveImageFile(image);
+                product.setProductImage(savedFile);
+            }
+
+            productRepository.save(product);
+            return new ResponseGenericResult<>(true, isUpdate ? "Product updated successfully." : "Product saved successfully.");
+
+        } catch (Exception e) {
+            log.error("Error {} product: {}", isUpdate ? "updating" : "saving", productRequestDto.getName(), e);
+            throw new RuntimeException("Error " + (isUpdate ? "updating" : "saving") + " product", e);
+        } finally {
+            log.info("Executed {}Product for: {}", isUpdate ? "update " : "", productRequestDto.getName());
+        }
+    }
+
+    private File saveImageFile(MultipartFile image) throws IOException {
+        byte[] imageBytes = image.getBytes();
+        String fileExtension = getFileExtension(Objects.requireNonNull(image.getOriginalFilename()));
+        FileType fileType = fileTypeRepository.findByLibelle(fileExtension.toLowerCase());
+
+        File file = File.builder()
+                .fileName(image.getOriginalFilename())
+                .addedOn(new Date())
+                .content(imageBytes)
+                .fileType(fileType)
+                .build();
+
+        return Optional.of(fileRepository.save(file))
+                .orElseThrow(() -> new RuntimeException("Failed to save file"));
+    }
+
+    private String getFileExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }

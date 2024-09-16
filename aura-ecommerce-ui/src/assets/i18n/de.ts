@@ -84,6 +84,28 @@ export const deLanguage={
             ROLES: 'Rollen'
         },
         ADD_USER: 'Benutzer hinzufügen'
+    },
+    PRODUCTS: {
+        PRODUCT_UPDATED: 'Produkt aktualisiert',
+        CANT_UPDATE_PRODUCT: 'Produkt kann nicht aktualisiert werden',
+        PRODUCT_CREATED: 'Produkt erstellt',
+        CANT_CREATE_PRODUCT: 'Produkt kann nicht erstellt werden',
+        PRODUCT_DELETED: 'Produkt gelöscht',
+        CANT_DELETE_PRODUCT: 'Produkt kann nicht gelöscht werden',
+        MANAGE_PRODUCT: 'Produkte verwalten',
+        CODE: 'Code',
+        NAME: 'Name',
+        NAME_IS_REQUIRED: 'Name ist erforderlich.',
+        IMAGE: 'Bild',
+        PRICE: 'Preis',
+        CATEGORY: 'Kategorie',
+        REVIEWS: 'Bewertungen',
+        STATUS: 'Status',
+        DESCRIPTION: 'Beschreibung',
+        INVENTORY_STATUS: 'Lagerstatus',
+        THERE_ARE_NO_ITEMS: 'Es gibt keine Artikel.',
+        QUANTITY: 'Menge'
     }
+    
    
 }

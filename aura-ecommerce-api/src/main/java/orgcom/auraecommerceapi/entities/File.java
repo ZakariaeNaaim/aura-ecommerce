@@ -17,12 +17,12 @@ public class File implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] content;
     private String fileName;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date addedOn;
-    private String addedBy;
     @ManyToOne(fetch = FetchType.LAZY)
     private FileType fileType;
 }

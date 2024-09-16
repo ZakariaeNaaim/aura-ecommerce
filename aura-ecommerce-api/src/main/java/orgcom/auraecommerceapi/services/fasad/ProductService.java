@@ -5,10 +5,15 @@ import orgcom.auraecommerceapi.dtos.ProductRequestDto;
 import orgcom.auraecommerceapi.entities.Product;
 import orgcom.auraecommerceapi.shared.ResponseGenericResult;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ProductService {
     ResponseGenericResult<Boolean> saveProduct(ProductRequestDto productRequestDto, MultipartFile image);
 
     ResponseGenericResult<List<Product>> getAllProducts();
+
+    ResponseGenericResult<Boolean> updateProduct(ProductRequestDto productRequestDto, MultipartFile image);
+
+    ResponseGenericResult<Boolean> deleteProduct(ArrayList<Long> ids);
 }
