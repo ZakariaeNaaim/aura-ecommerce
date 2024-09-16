@@ -10,7 +10,7 @@ export interface Product {
     price?: number;
     quantity?: number;
     inventoryStatus?: InventoryStatus;
-    category?: string;
-    image?: string;
+    categoryId?: number;
+    image?: string | File;
     rating?: number;
 }

@@ -83,8 +83,7 @@ export class UserComponent implements OnInit {
       error:()=>{
         this.messageService.add({ severity: 'error', summary: 'Error', detail:this.translationService.translate('USERS.CANT_DELETE_USER') });
       }
-    })
-    
+    });
   }
 
   openConfirmDialog(event: Event, user: AuraUser) {

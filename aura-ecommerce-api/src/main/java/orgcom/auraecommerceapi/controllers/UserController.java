@@ -9,7 +9,6 @@ import orgcom.auraecommerceapi.shared.ResponseGenericResult;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/users")
 @RestController
 public class UserController {

@@ -3,8 +3,8 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [RouterModule.forChild([
-        { path: 'menu', loadChildren: () => import('../shared/crud/crud.module').then(m => m.CrudModule) },
-        { path: 'orders', loadChildren: () => import('../shared/crud/crud.module').then(m => m.CrudModule) },
+        { path: 'product', loadChildren: () => import('./product/product.module').then(m => m.ProductModule) },
+        { path: 'orders', loadChildren: () => import('./orders/crud.module').then(m => m.CrudModule) },
         { path: 'users', loadChildren: () => import('../pages/users/users.module').then(m => m.UserModule) },
         // { path: 'crud', loadChildren: () => import('../shared/crud/crud.module').then(m => m.CrudModule) },
         // { path: 'empty', loadChildren: () => import('../shared/empty/emptydemo.module').then(m => m.EmptyDemoModule) },
