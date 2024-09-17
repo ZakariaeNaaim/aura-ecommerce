@@ -1,8 +1,10 @@
 package orgcom.auraecommerceapi.services.serviceImpl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import orgcom.auraecommerceapi.dtos.ProductDto;
 import orgcom.auraecommerceapi.dtos.ProductRequestDto;
 import orgcom.auraecommerceapi.entities.*;
 import orgcom.auraecommerceapi.mappers.ProductMapper;
@@ -12,6 +14,7 @@ import orgcom.auraecommerceapi.shared.ResponseGenericResult;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -40,11 +43,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseGenericResult<List<Product>> getAllProducts() {
+    public ResponseEntity<List<ProductDto>> getAllProducts() {
         log.info("Executing getAllProducts");
         try {
             List<Product> products = productRepository.findAll();
-            return new ResponseGenericResult<>(products);
+            List<ProductDto> productDTOs = products.stream().map(product -> {
+                byte[] imageBlob = null;
+                if (product.getProductImage() != null && product.getProductImage().getContent() != null) {
+                    imageBlob = product.getProductImage().getContent();
+                }
+                return new ProductDto(product, imageBlob);
+            }).toList();
+
+            return ResponseEntity.ok(productDTOs);
         } catch (Exception e) {
             log.error("Error retrieving all products", e);
             throw new RuntimeException("Failed to get products", e);
@@ -86,6 +97,7 @@ public class ProductServiceImpl implements ProductService {
             Category category = categoryRepository.findById(productRequestDto.getCategoryId())
                     .orElseThrow(() -> new RuntimeException("Category not found"));
             product.setCategory(category);
+
 
             if (!image.isEmpty()) {
                 File savedFile = saveImageFile(image);

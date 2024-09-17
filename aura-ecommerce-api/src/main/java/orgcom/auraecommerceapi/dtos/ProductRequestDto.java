@@ -11,4 +11,5 @@ public class ProductRequestDto {
     private double price;
     private double quantity;
     private int categoryId;
+    private String inventoryStatus;
 }

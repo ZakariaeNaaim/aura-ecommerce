@@ -23,8 +23,9 @@ public class Product implements Serializable {
     private String description;
     private Double price;
     private Double quantity;
-    @Enumerated(EnumType.STRING)
-    private ProductStatus productStatus;
+    //@Enumerated(EnumType.STRING)
+    //private ProductStatus inventoryStatus;
+    private String inventoryStatus;
 
     @JsonIgnore
     @ManyToOne

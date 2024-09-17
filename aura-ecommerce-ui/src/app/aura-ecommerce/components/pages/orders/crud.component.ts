@@ -18,7 +18,7 @@ export class CrudComponent implements OnInit {
 
     products: Product[] = [];
 
-    product: Product = {};
+    product: Product = {category:{id:'',libelle:''}};
 
     selectedProducts: Product[] = [];
 
@@ -51,7 +51,7 @@ export class CrudComponent implements OnInit {
     }
 
     openNew() {
-        this.product = {};
+        this.product = {category:{id:'',libelle:''}};
         this.submitted = false;
         this.productDialog = true;
     }
@@ -81,7 +81,7 @@ export class CrudComponent implements OnInit {
         this.deleteProductDialog = false;
         this.products = this.products.filter(val => val.id !== this.product.id);
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-        this.product = {};
+        this.product = {category:{id:'',libelle:''}};
     }
 
     hideDialog() {

@@ -87,6 +87,12 @@ export const enLanguage={
         ADD_USER : 'Add User'
     },
     PRODUCTS : {
+        NEW: 'New',
+        DELETE : 'Delete',
+        NO : 'No',
+        YES : 'Yes',
+        CANCEL : 'Cancel',
+        SAVE : 'Save',
         PRODUCT_UPDATED : 'Product updated',
         CANT_UPDATE_PRODUCT :"Product can't be updated",
         PRODUCT_CREATED : 'Product created',
@@ -105,7 +111,10 @@ export const enLanguage={
         DESCRIPTION : 'Description',
         INVENTORY_STATUS : 'Inventory Status',
         THERE_ARE_NO_ITEMS : 'There are no items.',
-        QUANTITY : 'Quantity'        
+        QUANTITY : 'Quantity',
+        PRODUCT : 'Product',
+        CANT_LOAD_CATEGORIES : "can't load Categories",
+        CANT_LOAD_PRODUCTS : "can't load Products"
     }
     
     

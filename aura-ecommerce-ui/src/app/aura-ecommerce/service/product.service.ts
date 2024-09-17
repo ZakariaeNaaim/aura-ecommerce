@@ -42,9 +42,9 @@ export class ProductService {
         formData.append('description', product.description);
         formData.append('price', product.price.toString());
         formData.append('quantity', product.quantity.toString());
-        formData.append('categoryId', product.categoryId.toString());
+        formData.append('categoryId', product.category.id.toString());
         formData.append('image', product.image);
-        // formData.append('product', new Blob([JSON.stringify(product)], { type: 'application/json' }));
+        formData.append('inventoryStatus', product.inventoryStatus as string);
         return formData
     }
     
