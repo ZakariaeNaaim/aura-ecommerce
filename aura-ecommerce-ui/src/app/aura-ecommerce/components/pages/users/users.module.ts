@@ -26,6 +26,7 @@ import { OrderListModule } from 'primeng/orderlist';
 import { PickListModule } from 'primeng/picklist';
 import { DataViewModule } from 'primeng/dataview';
 import { TranslationModule } from "../../../../shared/services/translation/translate.module";
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
     imports: [
@@ -52,6 +53,7 @@ import { TranslationModule } from "../../../../shared/services/translation/trans
     PickListModule,
     TooltipModule,
     DataViewModule,
+    ProgressSpinnerModule,
     TranslationModule
 ],
     declarations: [UserComponent,UserDialogComponent],

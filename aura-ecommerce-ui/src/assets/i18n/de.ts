@@ -6,6 +6,10 @@ export const deLanguage={
         YES : 'Ja',
         NO : 'Nein'
     },
+    APP_CONFIG: {
+        THEME: 'Thema (Weiß / Dunkelmodus)',
+        SCALE: 'Skalierung'
+    },
     APP_MENU: {
         HOME: 'Startseite',
         MANAGEMENT: 'Verwaltung',
@@ -115,6 +119,11 @@ export const deLanguage={
         PRODUCT : 'Produkt',
         CANT_LOAD_CATEGORIES: 'Kann Kategorien nicht laden',
         CANT_LOAD_PRODUCTS: 'Kann Produkte nicht laden'
+    },
+    PRODUCT_USER: {
+        PRODUCTS: 'Produkte',
+        SEARCH_BY_NAME: 'Nach Name suchen',
+        SORT_BY_PRICE: 'Nach Preis sortieren'
     }
     
    
