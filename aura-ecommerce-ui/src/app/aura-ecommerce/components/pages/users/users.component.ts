@@ -17,6 +17,7 @@ export class UserComponent implements OnInit {
   displayDialog: boolean = false;
   selectedUser: AuraUser = { id : 0,username: '', email: '', password: '', role: [] };
   isEditing: boolean = false;
+  loading = true;
 
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
     private userManagementService: UserManagementService,private authService:AuthService,
@@ -43,6 +44,9 @@ export class UserComponent implements OnInit {
         },
         error :()=>{
           this.messageService.add({ severity: 'error', summary: 'Error', detail: this.translationService.translate('USERS.ERROR_GETTING_USERS') });
+        },
+        complete : ()=>{
+          this.loading = false;
         }
       }
     )

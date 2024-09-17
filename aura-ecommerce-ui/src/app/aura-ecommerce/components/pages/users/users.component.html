@@ -7,7 +7,10 @@
             </div>
             
             <div class="surface-ground px-4 py-5">
-                <div class="grid">
+                <div *ngIf="loading" class="text-center">
+                    <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+                </div>
+                <div  *ngIf="!loading" class="grid">
                     <div class="col-12 md:col-6 lg:col-4 xl:col-3" *ngFor="let user of users">
                         <div class="user-card surface-card shadow-3 p-4 border-round border-1 border-gray-200 transition-transform transform hover:scale-105 h-full">
                             <div class="flex align-items-center mb-3">

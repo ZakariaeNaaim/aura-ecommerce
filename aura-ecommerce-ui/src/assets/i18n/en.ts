@@ -6,6 +6,10 @@ export const enLanguage={
         YES : 'Yes',
         NO : 'No'
     },
+    APP_CONFIG : {
+        THEME : 'Theme (White / Dark Mode)',
+        SCALE : 'Scale'
+    },
     APP_MENU : {
         BY : 'by',
         HOME : 'Home',
@@ -116,6 +120,11 @@ export const enLanguage={
         PRODUCT : 'Product',
         CANT_LOAD_CATEGORIES : "can't load Categories",
         CANT_LOAD_PRODUCTS : "can't load Products"
+    },
+    PRODUCT_USER : {
+        PRODUCTS : 'Products',
+        SEARCH_BY_NAME : 'Search By Name',
+        SORT_BY_PRICE : ' Sort By Price'
     }
     
     
