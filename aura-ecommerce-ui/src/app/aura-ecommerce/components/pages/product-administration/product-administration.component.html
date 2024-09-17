@@ -93,10 +93,8 @@
                             <span class="p-column-title">{{
                                 "PRODUCTS.IMAGE" | translate
                                 }}</span>
-                            <img [src]="
-                                    'assets/demo/images/product/' +
-                                    product.image
-                                " [alt]="product.name" width="100" class="shadow-4" />
+                            <img [src]="'data:image/'+product.imageType+';base64,' + product.imageBlob"
+                                 [alt]="product.name" width="100" class="shadow-4" />
                         </td>
                         <td style="width: 14%; min-width: 8rem">
                             <span class="p-column-title">{{
@@ -151,8 +149,9 @@
                     <input type="file" pInputText id="image" [(ngModel)]="product.image" (change)="onFileChange($event)"
                         required autofocus />
                 </div>
-                <img *ngIf="product.image" [src]=" product.image" [alt]="product.image"
-                    width="150" class="mt-0 mx-auto mb-5 block shadow-2" required />
+                <div *ngIf="imagePreviewUrl">
+                    <img [src]="imagePreviewUrl" alt="Prévisualisation" style="max-width: 50%; max-height: 200px;"/>
+                  </div>
                 <div class="field">
                     <label for="name">{{ "PRODUCTS.NAME" | translate }}</label>
                     <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus [ngClass]="{

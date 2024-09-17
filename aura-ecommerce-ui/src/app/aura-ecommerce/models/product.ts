@@ -15,4 +15,5 @@ export interface Product {
     image?: string | File;
     imageBlob?:any;
     rating?: number;
+    imageType?:string;
 }

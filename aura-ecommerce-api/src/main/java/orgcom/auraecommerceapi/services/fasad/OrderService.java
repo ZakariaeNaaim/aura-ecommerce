@@ -12,7 +12,7 @@ import java.util.List;
 public interface OrderService {
     ResponseGenericResult<Boolean> saveOrder(Order order);
     ResponseGenericResult<Order> getOrder(String orderName);
-    ResponseGenericResult<List<Order>> getAllOrders();
+    ResponseGenericResult<List<Order>> getAllOrders(Long userId);
     ResponseGenericResult<List<Order>> getAnnulatedOrders();
     ResponseGenericResult<List<Order>> getOrdersByDate(String orderDate);
 
