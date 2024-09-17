@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
     public ResponseGenericResult<List<Order>> getAllOrders(Long userId) {
         logger.info("Executing methode  getAllOrders" );
         try {
-            return new ResponseGenericResult<>(_orderRepository.findAllById());
+            return new ResponseGenericResult<>(_orderRepository.findAll());
         }catch (Exception ex){
             throw new RuntimeException();
         }finally {
