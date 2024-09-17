@@ -12,7 +12,6 @@ import { AuthGuard } from './aura-ecommerce/auth/auth.guard';
                 canActivate:[AuthGuard],
                 children: [
                     { path: '', loadChildren: () => import('./aura-ecommerce/components/pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
-                    { path: 'blocks', loadChildren: () => import('./aura-ecommerce/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
                     { path: 'pages', loadChildren: () => import('./aura-ecommerce/components/pages/pages.module').then(m => m.PagesModule) }
                 ]
             },

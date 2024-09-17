@@ -12,6 +12,7 @@ export const enLanguage={
         MANAGEMENT : 'Management',
         ORDERS : 'Orders',
         PRODUCTS : 'Products',
+        PRODUCTS_ADMIN : 'Products Administration',
         USERS : 'Users'
     },
     TOP_BAR :{

@@ -11,6 +11,7 @@ export const deLanguage={
         MANAGEMENT: 'Verwaltung',
         ORDERS: 'Bestellungen',
         PRODUCTS: 'Produkte',
+        PRODUCTS_ADMIN : 'Produkte Administration',
         USERS: 'Benutzer'
     },
     TOP_BAR :{
