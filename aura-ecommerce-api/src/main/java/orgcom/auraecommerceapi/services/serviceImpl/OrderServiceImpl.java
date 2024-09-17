@@ -59,10 +59,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseGenericResult<List<Order>> getAllOrders() {
+    public ResponseGenericResult<List<Order>> getAllOrders(Long userId) {
         logger.info("Executing methode  getAllOrders" );
         try {
-            return new ResponseGenericResult<>(_orderRepository.findAll());
+            return new ResponseGenericResult<>(_orderRepository.findAllById());
         }catch (Exception ex){
             throw new RuntimeException();
         }finally {

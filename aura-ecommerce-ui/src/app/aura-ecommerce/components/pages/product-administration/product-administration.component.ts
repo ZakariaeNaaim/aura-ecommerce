@@ -25,6 +25,7 @@ export class ProductAdministrationComponent implements OnInit {
     rowsPerPageOptions = [5, 10, 20];
     updateMode: boolean;
     loading = true;
+    imagePreviewUrl: string | ArrayBuffer | null = null;
 
     constructor(
         private productService: ProductService,
@@ -145,8 +146,17 @@ export class ProductAdministrationComponent implements OnInit {
         const file = event.target.files[0];
         if (file) {
             this.product.image = file;
+            this.previewImage(file);
         }
     }
+
+    previewImage(file: File) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.imagePreviewUrl = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
 
     saveProduct() {
         if (this.updateMode) {
