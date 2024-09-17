@@ -17,6 +17,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { TranslationModule } from 'src/app/shared/services/translation/translate.module';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import { TranslationModule } from 'src/app/shared/services/translation/translate
         RadioButtonModule,
         InputNumberModule,
         DialogModule,
-        TranslationModule
+        TranslationModule,
+        ProgressSpinnerModule
     ],
     declarations: [ProductComponent]
 })

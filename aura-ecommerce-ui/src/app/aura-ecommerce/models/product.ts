@@ -1,6 +1,6 @@
 interface InventoryStatus {
-    label: string;
-    value: string;
+    id: string;
+    libelle: string;
 }
 export interface Product {
     id?: string;
@@ -9,8 +9,10 @@ export interface Product {
     description?: string;
     price?: number;
     quantity?: number;
-    inventoryStatus?: InventoryStatus;
+    inventoryStatus?: InventoryStatus |string;
     categoryId?: number;
+    category:InventoryStatus;
     image?: string | File;
+    imageBlob?:any;
     rating?: number;
 }

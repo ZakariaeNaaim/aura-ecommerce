@@ -1,7 +1,9 @@
 package orgcom.auraecommerceapi.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import orgcom.auraecommerceapi.dtos.ProductDto;
 import orgcom.auraecommerceapi.dtos.ProductRequestDto;
 import orgcom.auraecommerceapi.entities.Product;
 import orgcom.auraecommerceapi.services.fasad.ProductService;
@@ -22,7 +24,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseGenericResult<List<Product>> getProducts() {
+    public ResponseEntity<List<ProductDto>> getProducts() {
         return  _productService.getAllProducts();
     }
 

@@ -86,6 +86,12 @@ export const deLanguage={
         ADD_USER: 'Benutzer hinzufügen'
     },
     PRODUCTS: {
+        NEW: 'Neu',
+        DELETE : 'Löschen',
+        NO : 'Nein',
+        YES : 'Ja',
+        CANCEL: 'Abbrechen',
+        SAVE: 'Speichern',
         PRODUCT_UPDATED: 'Produkt aktualisiert',
         CANT_UPDATE_PRODUCT: 'Produkt kann nicht aktualisiert werden',
         PRODUCT_CREATED: 'Produkt erstellt',
@@ -104,7 +110,10 @@ export const deLanguage={
         DESCRIPTION: 'Beschreibung',
         INVENTORY_STATUS: 'Lagerstatus',
         THERE_ARE_NO_ITEMS: 'Es gibt keine Artikel.',
-        QUANTITY: 'Menge'
+        QUANTITY: 'Menge',
+        PRODUCT : 'Produkt',
+        CANT_LOAD_CATEGORIES: 'Kann Kategorien nicht laden',
+        CANT_LOAD_PRODUCTS: 'Kann Produkte nicht laden'
     }
     
    
