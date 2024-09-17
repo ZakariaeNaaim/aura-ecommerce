@@ -6,16 +6,18 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ButtonModule } from 'primeng/button';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { AppConfigComponent } from './app.config.component';
+import { TranslationModule } from "../../shared/services/translation/translate.module";
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        SidebarModule,
-        RadioButtonModule,
-        ButtonModule,
-        InputSwitchModule
-    ],
+    CommonModule,
+    FormsModule,
+    SidebarModule,
+    RadioButtonModule,
+    ButtonModule,
+    InputSwitchModule,
+    TranslationModule
+],
     declarations: [
         AppConfigComponent
     ],

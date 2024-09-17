@@ -16,7 +16,7 @@ export const AuthGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
       const hasRole = expectedRoles.some(role => userRoles.includes(role));
 
       if (!hasRole) {
-        router.navigate(['/auth/access']);
+        router.navigate(['/landing']);
         return false;
       }
     }

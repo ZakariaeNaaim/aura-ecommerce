@@ -6,12 +6,17 @@ export const enLanguage={
         YES : 'Yes',
         NO : 'No'
     },
+    APP_CONFIG : {
+        THEME : 'Theme (White / Dark Mode)',
+        SCALE : 'Scale'
+    },
     APP_MENU : {
         BY : 'by',
         HOME : 'Home',
         MANAGEMENT : 'Management',
         ORDERS : 'Orders',
         PRODUCTS : 'Products',
+        PRODUCTS_ADMIN : 'Products Administration',
         USERS : 'Users'
     },
     TOP_BAR :{
@@ -86,6 +91,41 @@ export const enLanguage={
         },
         ADD_USER : 'Add User'
     },
+    PRODUCTS : {
+        NEW: 'New',
+        DELETE : 'Delete',
+        NO : 'No',
+        YES : 'Yes',
+        CANCEL : 'Cancel',
+        SAVE : 'Save',
+        PRODUCT_UPDATED : 'Product updated',
+        CANT_UPDATE_PRODUCT :"Product can't be updated",
+        PRODUCT_CREATED : 'Product created',
+        CANT_CREATE_PRODUCT :"Product can't be created",
+        PRODUCT_DELETED : 'Product deleted',
+        CANT_DELETE_PRODUCT : "can't delete Product",
+        MANAGE_PRODUCT : 'Manage Products',
+        CODE : 'Code',
+        NAME : 'Name',
+        NAME_IS_REQUIRED : 'Name is required.',
+        IMAGE : 'Image',
+        PRICE : 'Price',
+        CATEGORY : 'Category',
+        REVIEWS : 'Reviews',
+        STATUS : 'Status',
+        DESCRIPTION : 'Description',
+        INVENTORY_STATUS : 'Inventory Status',
+        THERE_ARE_NO_ITEMS : 'There are no items.',
+        QUANTITY : 'Quantity',
+        PRODUCT : 'Product',
+        CANT_LOAD_CATEGORIES : "can't load Categories",
+        CANT_LOAD_PRODUCTS : "can't load Products"
+    },
+    PRODUCT_USER : {
+        PRODUCTS : 'Products',
+        SEARCH_BY_NAME : 'Search By Name',
+        SORT_BY_PRICE : ' Sort By Price'
+    }
     
     
 }

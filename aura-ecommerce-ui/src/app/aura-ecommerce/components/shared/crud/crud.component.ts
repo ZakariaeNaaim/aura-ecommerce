@@ -33,7 +33,7 @@ export class CrudComponent implements OnInit {
     constructor(private productService: ProductService, private messageService: MessageService) { }
 
     ngOnInit() {
-        this.productService.getProducts().then(data => this.products = data);
+        // this.productService.getProducts().then(data => this.products = data);
 
         this.cols = [
             { field: 'product', header: 'Product' },
@@ -89,6 +89,13 @@ export class CrudComponent implements OnInit {
         this.submitted = false;
     }
 
+    onFileChange(event: any) {
+        const file = event.target.files[0];
+        if (file) {
+          this.product.image = file;
+        }
+      }
+
     saveProduct() {
         this.submitted = true;
 
@@ -101,10 +108,10 @@ export class CrudComponent implements OnInit {
             } else {
                 this.product.id = this.createId();
                 this.product.code = this.createId();
-                this.product.image = 'product-placeholder.svg';
                 // @ts-ignore
                 this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
                 this.products.push(this.product);
+                this.productService.saveProduct(this.product).subscribe();
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
             }
 

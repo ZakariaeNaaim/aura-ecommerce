@@ -90,6 +90,14 @@ public class AuthServiceImpl implements AuthService {
                               roles.add(modRole);
 
                               break;
+
+                         case "ROLE_PRODUCTS_ADMIN":
+                              Role pmRole = roleRepository.findByName(ERole.ROLE_PRODUCTS_ADMIN)
+                                      .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                              roles.add(pmRole);
+
+                              break;
+
                          case "ROLE_USERS":
                               Role usersRole = roleRepository.findByName(ERole.ROLE_USERS)
                                       .orElseThrow(() -> new RuntimeException("Error: Role is not found."));

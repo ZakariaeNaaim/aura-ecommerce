@@ -6,11 +6,16 @@ export const deLanguage={
         YES : 'Ja',
         NO : 'Nein'
     },
+    APP_CONFIG: {
+        THEME: 'Thema (Weiß / Dunkelmodus)',
+        SCALE: 'Skalierung'
+    },
     APP_MENU: {
         HOME: 'Startseite',
         MANAGEMENT: 'Verwaltung',
         ORDERS: 'Bestellungen',
         PRODUCTS: 'Produkte',
+        PRODUCTS_ADMIN : 'Produkte Administration',
         USERS: 'Benutzer'
     },
     TOP_BAR :{
@@ -84,6 +89,42 @@ export const deLanguage={
             ROLES: 'Rollen'
         },
         ADD_USER: 'Benutzer hinzufügen'
+    },
+    PRODUCTS: {
+        NEW: 'Neu',
+        DELETE : 'Löschen',
+        NO : 'Nein',
+        YES : 'Ja',
+        CANCEL: 'Abbrechen',
+        SAVE: 'Speichern',
+        PRODUCT_UPDATED: 'Produkt aktualisiert',
+        CANT_UPDATE_PRODUCT: 'Produkt kann nicht aktualisiert werden',
+        PRODUCT_CREATED: 'Produkt erstellt',
+        CANT_CREATE_PRODUCT: 'Produkt kann nicht erstellt werden',
+        PRODUCT_DELETED: 'Produkt gelöscht',
+        CANT_DELETE_PRODUCT: 'Produkt kann nicht gelöscht werden',
+        MANAGE_PRODUCT: 'Produkte verwalten',
+        CODE: 'Code',
+        NAME: 'Name',
+        NAME_IS_REQUIRED: 'Name ist erforderlich.',
+        IMAGE: 'Bild',
+        PRICE: 'Preis',
+        CATEGORY: 'Kategorie',
+        REVIEWS: 'Bewertungen',
+        STATUS: 'Status',
+        DESCRIPTION: 'Beschreibung',
+        INVENTORY_STATUS: 'Lagerstatus',
+        THERE_ARE_NO_ITEMS: 'Es gibt keine Artikel.',
+        QUANTITY: 'Menge',
+        PRODUCT : 'Produkt',
+        CANT_LOAD_CATEGORIES: 'Kann Kategorien nicht laden',
+        CANT_LOAD_PRODUCTS: 'Kann Produkte nicht laden'
+    },
+    PRODUCT_USER: {
+        PRODUCTS: 'Produkte',
+        SEARCH_BY_NAME: 'Nach Name suchen',
+        SORT_BY_PRICE: 'Nach Preis sortieren'
     }
+    
    
 }

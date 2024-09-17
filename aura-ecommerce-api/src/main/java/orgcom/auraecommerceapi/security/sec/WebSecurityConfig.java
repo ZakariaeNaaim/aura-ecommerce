@@ -15,24 +15,25 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import orgcom.auraecommerceapi.security.entities.ERole;
-import orgcom.auraecommerceapi.security.sec.jwt.AuthEntryPointJwt;
 import orgcom.auraecommerceapi.security.sec.jwt.AuthTokenFilter;
 import orgcom.auraecommerceapi.security.sec.services.UserDetailsServiceImpl;
 
 import java.util.Arrays;
+import org.springframework.beans.factory.annotation.Value;
 
 
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
 
-  UserDetailsServiceImpl userDetailsService;
-  private final AuthEntryPointJwt unauthorizedHandler;
 
-  WebSecurityConfig(UserDetailsServiceImpl userDetailsService,AuthEntryPointJwt authEntryPointJwt) {
+  @Value("${frontend.domain}")
+  private String frontendDomain;
+
+  UserDetailsServiceImpl userDetailsService;
+
+  WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
     this.userDetailsService = userDetailsService;
-    this.unauthorizedHandler = authEntryPointJwt;
   }
 
 
@@ -67,12 +68,14 @@ public class WebSecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(csrf -> csrf.disable())
-            .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth ->
                     auth.requestMatchers("/api/auth/**").permitAll()
                             .requestMatchers("/orders/**").hasAuthority("ROLE_ORDERS")
                             .requestMatchers("/users/**","/users").hasAuthority("ROLE_USERS")
+                            .requestMatchers("/products/**").permitAll()
+                            .requestMatchers("/categories/**").permitAll()
                             .anyRequest().authenticated()
             );
 
@@ -82,5 +85,17 @@ public class WebSecurityConfig {
 
     return http.build();
   }
+
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(Arrays.asList(frontendDomain));
+    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+  }
+
 
 }

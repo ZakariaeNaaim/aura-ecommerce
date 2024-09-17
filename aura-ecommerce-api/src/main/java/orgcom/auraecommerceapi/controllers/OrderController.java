@@ -9,11 +9,8 @@ import orgcom.auraecommerceapi.security.entities.User;
 import orgcom.auraecommerceapi.services.fasad.OrderService;
 import orgcom.auraecommerceapi.shared.ResponseGenericResult;
 
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/orders")
 @RestController
 public class OrderController {
@@ -26,9 +23,9 @@ public class OrderController {
         _orderService = orderService;
     }
 
-    @GetMapping("getOrders")
-    public ResponseGenericResult<List<Order>> getOrders() {
-        return _orderService.getAllOrders() ;
+    @GetMapping("/getOrders/{userId}")
+    public ResponseGenericResult<List<Order>> getOrders(@PathVariable Long userId) {
+        return _orderService.getAllOrders(userId) ;
     }
 
     @PostMapping("/saveOrder")
@@ -45,6 +42,7 @@ public class OrderController {
     public ResponseGenericResult<List<Order>> getAnnulatedOrders() {
         return _orderService.getAnnulatedOrders();
     }
+
     @GetMapping("/getOrderByDate")
     public ResponseGenericResult<List<Order>> getOrderByDate(@RequestHeader String date) {
         return _orderService.getOrdersByDate(date);

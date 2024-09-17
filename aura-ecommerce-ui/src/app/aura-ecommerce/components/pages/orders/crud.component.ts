@@ -18,7 +18,7 @@ export class CrudComponent implements OnInit {
 
     products: Product[] = [];
 
-    product: Product = {};
+    product: Product = {category:{id:'',libelle:''}};
 
     selectedProducts: Product[] = [];
 
@@ -33,7 +33,7 @@ export class CrudComponent implements OnInit {
     constructor(private productService: ProductService, private messageService: MessageService) { }
 
     ngOnInit() {
-        this.productService.getProducts().then(data => this.products = data);
+        // this.productService.getProducts().then(data => this.products = data);
 
         this.cols = [
             { field: 'product', header: 'Product' },
@@ -51,7 +51,7 @@ export class CrudComponent implements OnInit {
     }
 
     openNew() {
-        this.product = {};
+        this.product = {category:{id:'',libelle:''}};
         this.submitted = false;
         this.productDialog = true;
     }
@@ -81,7 +81,7 @@ export class CrudComponent implements OnInit {
         this.deleteProductDialog = false;
         this.products = this.products.filter(val => val.id !== this.product.id);
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-        this.product = {};
+        this.product = {category:{id:'',libelle:''}};
     }
 
     hideDialog() {
@@ -92,26 +92,26 @@ export class CrudComponent implements OnInit {
     saveProduct() {
         this.submitted = true;
 
-        if (this.product.name?.trim()) {
-            if (this.product.id) {
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-                this.products[this.findIndexById(this.product.id)] = this.product;
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-            } else {
-                this.product.id = this.createId();
-                this.product.code = this.createId();
-                this.product.image = 'product-placeholder.svg';
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-                this.products.push(this.product);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-            }
+        // if (this.product.name?.trim()) {
+        //     if (this.product.id) {
+        //         // @ts-ignore
+        //         this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
+        //         this.products[this.findIndexById(this.product.id)] = this.product;
+        //         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+        //     } else {
+        //         this.product.id = this.createId();
+        //         this.product.code = this.createId();
+        //         this.product.image = 'product-placeholder.svg';
+        //         // @ts-ignore
+        //         this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
+        //         this.products.push(this.product);
+        //         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+        //     }
 
-            this.products = [...this.products];
-            this.productDialog = false;
-            this.product = {};
-        }
+        //     this.products = [...this.products];
+        //     this.productDialog = false;
+        //     this.product = {};
+        // }
     }
 
     findIndexById(id: string): number {
