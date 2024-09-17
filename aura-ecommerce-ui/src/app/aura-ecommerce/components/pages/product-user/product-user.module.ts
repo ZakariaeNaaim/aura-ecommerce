@@ -18,6 +18,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { TranslationModule } from 'src/app/shared/services/translation/translate.module';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { DataViewModule } from 'primeng/dataview';
 
 @NgModule({
     imports: [
@@ -38,7 +39,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
         InputNumberModule,
         DialogModule,
         TranslationModule,
-        ProgressSpinnerModule
+        ProgressSpinnerModule,
+        DataViewModule
     ],
     declarations: [ProductUserComponent]
 })
