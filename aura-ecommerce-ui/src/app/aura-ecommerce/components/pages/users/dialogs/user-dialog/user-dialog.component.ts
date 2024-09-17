@@ -12,10 +12,11 @@ export class UserDialogComponent {
   roles: SelectItem[] = [
     { name: 'ROLE_ORDERS', code: 1 },
     { name: 'ROLE_PRODUCTS', code: 2 },
-    { name: 'ROLE_USERS', code: 3 },
-    { name: 'ROLE_DASHBOARD', code: 4 }
+    { name: 'ROLE_PRODUCTS_ADMIN', code: 3 },
+    { name: 'ROLE_USERS', code: 4 },
+    { name: 'ROLE_DASHBOARD', code: 5 }
   ];
-  selectedRoles: SelectItem[] = [{ name: 'ROLE_DASHBOARD', code: 4 }];
+  selectedRoles: SelectItem[] = [{ name: 'ROLE_DASHBOARD', code: 5 }];
   submitted: boolean = false;
 
   @Input() display: boolean = false;
@@ -48,8 +49,8 @@ export class UserDialogComponent {
   }
 
   isValid(): boolean {
-    if (this.selectedRoles && !this.selectedRoles.some(role => role.code === 4)) {
-      this.selectedRoles.push(this.roles.find(role => role.code === 4));
+    if (this.selectedRoles && !this.selectedRoles.some(role => role.code === 5)) {
+      this.selectedRoles.push(this.roles.find(role => role.code === 5));
     }
 
     this.user.role = this.selectedRoles.map(role => ({

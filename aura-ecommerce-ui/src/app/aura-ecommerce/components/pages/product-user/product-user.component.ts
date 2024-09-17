@@ -7,10 +7,10 @@ import { Category } from 'src/app/aura-ecommerce/models/category';
 import { TranslationService } from 'src/app/shared/services/translation/translate.service';
 
 @Component({
-    templateUrl: './product.component.html',
+    templateUrl: './product-user.component.html',
     providers: [MessageService]
 })
-export class ProductComponent implements OnInit {
+export class ProductUserComponent implements OnInit {
     productDialog: boolean = false;
     deleteProductDialog: boolean = false;
     deleteProductsDialog: boolean = false;
