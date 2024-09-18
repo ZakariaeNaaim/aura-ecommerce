@@ -1,7 +1,7 @@
 {
-  "name": "sakai-ng",
-  "version": "17.0.0",
-  "license": "MIT",
+  "name": "aura-ng",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
