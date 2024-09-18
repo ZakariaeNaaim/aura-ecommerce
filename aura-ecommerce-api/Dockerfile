@@ -12,7 +12,7 @@ RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
 
-COPY --from=build /app/target/aura-ecommerce-api-1.0.0.jar aura-ecommerce-api.jar
+COPY --from=build /target/aura-ecommerce-api-1.0.0.jar aura-ecommerce-api.jar
 
 EXPOSE 8080
 
