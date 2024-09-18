@@ -23,9 +23,9 @@ public class OrderController {
         _orderService = orderService;
     }
 
-    @GetMapping("getOrders")
-    public ResponseGenericResult<List<Order>> getOrders() {
-        return _orderService.getAllOrders() ;
+    @GetMapping("/getOrders/{userId}")
+    public ResponseGenericResult<List<Order>> getOrders(@PathVariable Long userId) {
+        return _orderService.getAllOrders(userId) ;
     }
 
     @PostMapping("/saveOrder")

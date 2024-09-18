@@ -20,6 +20,8 @@ public class ProductDto implements Serializable {
     private String inventoryStatus;
     private Category category;
     private byte[] imageBlob;  // To hold the image as a BLOB
+    private String imageType;
+
 
     public ProductDto(Product product, byte[] imageBlob) {
         this.id = product.getId();
@@ -29,6 +31,7 @@ public class ProductDto implements Serializable {
         this.quantity = product.getQuantity();
         this.inventoryStatus = product.getInventoryStatus();
         this.imageBlob = imageBlob;
+        this.imageType = product.getProductImage().getFileType().getLibelle();
         this.category = product.getCategory();
     }
 }
