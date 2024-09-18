@@ -1,7 +1,4 @@
 
-# Set a label for metadata (optional)
-LABEL authors="Zakariae Naaim / Mouhcine El Qadiri"
-
 # Stage 1: Build the application
 FROM maven:3.8.5-openjdk-17-slim AS build
 WORKDIR /app
