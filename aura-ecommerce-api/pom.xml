@@ -10,7 +10,7 @@
     </parent>
     <groupId>org-com</groupId>
     <artifactId>aura-ecommerce-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>aura-ecommerce-api</name>
     <description>aura-ecommerce-api</description>
     <url/>
