@@ -4,11 +4,17 @@ import { Subscription, debounceTime } from 'rxjs';
 import { Product } from 'src/app/aura-ecommerce/models/product';
 import { ProductService } from 'src/app/aura-ecommerce/service/product.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { DashboardService } from './services/dashboard.service';
+import { AuthService } from 'src/app/aura-ecommerce/auth/services/auth.service';
 
 @Component({
     templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+
+    orders:any;
+
+    expenses :number;
 
     items!: MenuItem[];
 
@@ -20,7 +26,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
-    constructor(private productService: ProductService, public layoutService: LayoutService) {
+    constructor(private productService: ProductService, public layoutService: LayoutService,private dashboardService:DashboardService,
+                private authService:AuthService
+    ) {
         this.subscription = this.layoutService.configUpdate$
         .pipe(debounceTime(25))
         .subscribe((config) => {
@@ -29,6 +37,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.getOrders();
         this.initChart();
         this.productService.getProductsSmall().then(data => this.products = data);
 
@@ -36,6 +45,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
             { label: 'Remove', icon: 'pi pi-fw pi-minus' }
         ];
+    }
+    getOrders() {
+        this.dashboardService.getOrders(this.authService.userProfile.id).subscribe({
+            next : (res) => {
+                this.orders=res;
+                console.log(res);
+                this.expenses = res.reduce((sum:any, command:any) => sum + command.totalCommand, 0);
+            },
+            error : () => {
+
+            }
+        })
     }
 
     initChart() {

@@ -52,7 +52,7 @@ export class AuthService {
       this.checkTokenExpired(decodedJwt.exp);
      
       this.userProfile = {
-        id: decodedJwt.Id,
+        id: decodedJwt.id,
         username: decodedJwt.sub,
         email: decodedJwt.email,
         role: decodedJwt.role,
@@ -83,7 +83,7 @@ export class AuthService {
       try {
         const decodedJwt: any = jwtDecode(this.accessToken);
         this.userProfile = {
-          id: decodedJwt.userId,
+          id: decodedJwt.id,
           username: decodedJwt.sub,
           email: decodedJwt.email,
           role: decodedJwt.role,
