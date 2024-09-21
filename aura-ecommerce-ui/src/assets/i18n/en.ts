@@ -64,7 +64,8 @@ export const enLanguage={
         NAME : 'Name',
         PRICE : 'Price',
         VIEW : 'View',
-        SALES_OVERVIEW : 'Sales Overview'
+        SALES_OVERVIEW : 'Sales Overview',
+        EXPENSES : 'Expenses'
     },
     USERS : {
         USER_MANAGEMENT : 'User Management',

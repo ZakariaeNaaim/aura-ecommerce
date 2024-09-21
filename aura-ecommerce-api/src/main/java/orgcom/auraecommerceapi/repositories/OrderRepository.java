@@ -14,4 +14,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Order findOrderByReference(String reference);
     List<Order> findOrdersByEtat(OrderEtatEnum etat);
     List<Order> findOrdersByOrderDate(Date orderDate);
+
+    List<Order> findOrdersByUserId(Long userId);
 }

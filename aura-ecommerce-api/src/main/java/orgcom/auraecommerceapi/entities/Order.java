@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import orgcom.auraecommerceapi.enums.OrderEtatEnum;
+import orgcom.auraecommerceapi.security.entities.User;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,5 +24,7 @@ public class Order implements Serializable {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date orderDate;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
 
 }

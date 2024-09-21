@@ -63,7 +63,8 @@ export const deLanguage={
         NAME: 'Name',
         PRICE: 'Preis',
         VIEW: 'Ansehen',
-        SALES_OVERVIEW: 'Verkaufsübersicht'
+        SALES_OVERVIEW: 'Verkaufsübersicht',
+        EXPENSES : 'Kosten'
     },
     USERS: {
         USER_MANAGEMENT: 'Benutzerverwaltung',

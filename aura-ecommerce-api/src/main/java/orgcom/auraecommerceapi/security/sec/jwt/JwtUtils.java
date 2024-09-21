@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.*;
@@ -35,7 +36,7 @@ public class JwtUtils {
     claims.put("id", userPrincipal.getId());
     claims.put("email", userPrincipal.getEmail());
     claims.put("role", userPrincipal.getAuthorities().stream()
-            .map(item -> item.getAuthority())
+            .map(GrantedAuthority::getAuthority)
             .collect(Collectors.toList()));
 
     return Jwts.builder()
