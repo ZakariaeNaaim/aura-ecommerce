@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/aura-ecommerce/models/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { ProductService } from 'src/app/aura-ecommerce/service/product.service';
+import { ProductService } from 'src/app/aura-ecommerce/components/pages/product-administration/services/product.service';
 import { Category } from 'src/app/aura-ecommerce/models/category';
 import { TranslationService } from 'src/app/shared/services/translation/translate.service';
 

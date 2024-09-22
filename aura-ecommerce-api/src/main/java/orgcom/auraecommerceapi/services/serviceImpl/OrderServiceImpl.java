@@ -1,5 +1,6 @@
 package orgcom.auraecommerceapi.services.serviceImpl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import orgcom.auraecommerceapi.entities.Order;
 import orgcom.auraecommerceapi.enums.OrderEtatEnum;
@@ -7,98 +8,93 @@ import orgcom.auraecommerceapi.repositories.OrderRepository;
 import orgcom.auraecommerceapi.services.fasad.OrderService;
 import orgcom.auraecommerceapi.shared.ResponseGenericResult;
 
-import javax.xml.crypto.Data;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
-import java.util.logging.Logger;
 
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
-    private Logger logger = Logger.getLogger(this.getClass().getName());
-    private OrderRepository _orderRepository;
 
-    public OrderServiceImpl(OrderRepository _orderRepository) {
-        this._orderRepository = _orderRepository;
+    private final OrderRepository orderRepository;
+
+    public OrderServiceImpl(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
     }
 
     @Override
     public ResponseGenericResult<Boolean> saveOrder(Order order) {
-        logger.info("save Order "+ order.getReference());
+        log.info("Saving order with reference: {}", order.getReference());
         try {
-            Order saved = _orderRepository.save(order);
-            if(saved != null) {
-                return new ResponseGenericResult<Boolean>(true, "command saved successfully");
-            }
-            return new ResponseGenericResult<Boolean>(false, "command is not saved");
-
-        }catch (Exception e){
-            throw new RuntimeException();
-        }finally {
-            logger.info("command saved successefully");
+            orderRepository.save(order);
+            log.info("Order saved successfully: {}", order.getReference());
+            return new ResponseGenericResult<>(true, "Order saved successfully");
+        } catch (Exception e) {
+            log.error("Error saving order: {}", order.getReference(), e);
+            return new ResponseGenericResult<>(false, "Failed to save order");
         }
     }
 
     @Override
     public ResponseGenericResult<Order> getOrder(String orderReference) {
-        logger.info("Executing methode  getCommand by reference: " + orderReference);
+        log.info("Fetching order by reference: {}", orderReference);
         try {
-            Order order = _orderRepository.findOrderByReference(orderReference);
-            if(order != null) {
-                return new ResponseGenericResult<Order>(order);
+            Order order = orderRepository.findOrderByReference(orderReference);
+            if (order != null) {
+                log.info("Order found: {}", orderReference);
+                return new ResponseGenericResult<>(order);
             }
-            return new ResponseGenericResult<Order>(null);
-        }catch (Exception e){
-            throw new RuntimeException();
-        }finally {
-            logger.info("methode executed; getCommand");
+            log.warn("Order not found: {}", orderReference);
+            return new ResponseGenericResult<>(false, "Order not found");
+        } catch (Exception e) {
+            log.error("Error fetching order by reference: {}", orderReference, e);
+            return new ResponseGenericResult<>(false, "Error fetching order");
         }
     }
 
     @Override
     public ResponseGenericResult<List<Order>> getAllOrders(Long userId) {
-        logger.info("Executing methode  getAllOrders" );
+        log.info("Fetching all orders for user ID: {}", userId);
         try {
-            return new ResponseGenericResult<>(_orderRepository.findAll());
-        }catch (Exception ex){
-            throw new RuntimeException();
-        }finally {
-            logger.info("methode Executed  getAllOrders" );
-        }
-    }
-
-
-    @Override
-    public ResponseGenericResult<List<Order>> getAnnulatedOrders() {
-        logger.info("Executing methode  getAnnulatedCommands" );
-        try {
-            List<Order> orders = _orderRepository.findOrdersByEtat(OrderEtatEnum.ANNULE);
-            if(orders != null) {
-                return new ResponseGenericResult<List<Order>>(orders);
-            }
-            return new ResponseGenericResult<List<Order>>(null);
-        }catch (Exception e){
-            throw new RuntimeException();
-        }finally {
-            logger.info("methode executed; getAnnulatedCommands");
+            List<Order> orders = orderRepository.findOrdersByUserId(userId);
+            log.info("Orders fetched successfully for user ID: {}", userId);
+            return new ResponseGenericResult<>(orders);
+        } catch (Exception e) {
+            log.error("Error fetching orders for user ID: {}", userId, e);
+            return new ResponseGenericResult<>(false, "Error fetching orders");
         }
     }
 
     @Override
-    public ResponseGenericResult<List<Order>> getOrdersByDate(String StringOrderDate) {
-        logger.info("Executing methode  getOrderByDate" );
+    public ResponseGenericResult<List<Order>> getCanceledOrders() {
+        log.info("Fetching all canceled orders");
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy", Locale.FRENCH);
-            Date orderDate = formatter.parse(StringOrderDate);
-            List<Order> ordersByOrderDate = _orderRepository.findOrdersByOrderDate(orderDate);
-            return  new ResponseGenericResult<>(ordersByOrderDate);
-        }catch (Exception ex){
-            throw new RuntimeException();
-        }finally {
-            logger.info("methode Executed  getOrdersByDate" );
+            List<Order> canceledOrders = orderRepository.findOrdersByEtat(OrderEtatEnum.CANCELED);
+            log.info("Canceled orders fetched successfully");
+            return new ResponseGenericResult<>(canceledOrders);
+        } catch (Exception e) {
+            log.error("Error fetching canceled orders", e);
+            return new ResponseGenericResult<>(false, "Error fetching canceled orders");
+        }
+    }
+
+    @Override
+    public ResponseGenericResult<List<Order>> getOrdersByDate(String orderDateString) {
+        log.info("Fetching orders by date: {}", orderDateString);
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
+            Date orderDate = formatter.parse(orderDateString);
+            List<Order> orders = orderRepository.findOrdersByOrderDate(orderDate);
+            log.info("Orders fetched successfully for date: {}", orderDateString);
+            return new ResponseGenericResult<>(orders);
+        } catch (ParseException e) {
+            log.error("Invalid date format: {}", orderDateString, e);
+            return new ResponseGenericResult<>(false, "Invalid date format");
+        } catch (Exception e) {
+            log.error("Error fetching orders by date: {}", orderDateString, e);
+            return new ResponseGenericResult<>(false, "Error fetching orders by date");
         }
     }
 }

@@ -43,7 +43,9 @@ export const enLanguage={
         SIGN_IN_TO_CONTINUE : 'Sign in to continue',
         USER_NAME : 'User Name',
         PASSWORD:'Password',
-        SIGN_IN :'Sign In'
+        SIGN_IN :'Sign In',
+        SIGN_UP : 'Sign Up',
+        DONT_HAVE_ACCOUNT : "don't have an Account ?"
     },
     SIGN_UP: {
         JOIN: 'Join Aura!',
@@ -65,7 +67,11 @@ export const enLanguage={
         PRICE : 'Price',
         VIEW : 'View',
         SALES_OVERVIEW : 'Sales Overview',
-        EXPENSES : 'Expenses'
+        EXPENSES : 'Expenses',
+        RECENT_ORDERS : 'Recent Orders',
+        REFERENCE : 'Reference',
+        ORDER_DATE : 'Order Date',
+        STATUS : 'Status',
     },
     USERS : {
         USER_MANAGEMENT : 'User Management',

@@ -1,0 +1,68 @@
+<div class="grid">
+    <div class="col-12">
+
+        <div *ngIf="loading" class="text-center">
+            <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+        </div>
+
+        <div *ngIf="!loading" class="card px-6 py-6">
+            <p-toast></p-toast>
+         
+
+            <p-table #dt [value]="orders" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['id','reference','totalCommand','etat','orderDate']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedOrders" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Manage Orders</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="id">Code <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="reference">Reference <p-sortIcon field="reference"></p-sortIcon></th>
+                        <th pSortableColumn="totalCommand">Total Commands <p-sortIcon field="totalCommand"></p-sortIcon></th>
+                        <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+                        <th pSortableColumn="orderDate">Order Date <p-sortIcon field="orderDate"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-order>
+                    <tr>
+                        <td style="width:20%; min-width:10rem;"><span class="p-column-title">Code</span>
+                            {{order.id}}
+                        </td>
+
+                        <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">Reference</span>
+                            {{order.reference}}
+                        </td>
+                       
+                        <td style="width:20%; min-width:8rem;">
+                            <span class="p-column-title">Total Commands</span>
+                            {{order.totalCommand | currency:'USD'}}
+                        </td>
+
+                        <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">Status</span>
+                            {{order.etat}}
+                        </td>
+                      
+                        <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">Order Date</span>
+                            {{order.orderDate}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        
+
+       
+
+       
+    </div>
+</div>

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Product } from '../models/product';
+import { Product } from '../../../../models/product';
 import { Observable } from 'rxjs';
 import { ResponseGenericResult } from 'src/app/shared/models/response-generic-result/response-generic-result.model';
-import { Category } from '../models/category';
+import { Category } from '../../../../models/category';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
