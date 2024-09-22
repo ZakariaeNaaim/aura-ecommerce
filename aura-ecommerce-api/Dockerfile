@@ -1,8 +1,5 @@
 
-
 FROM maven:3.8.5-openjdk-17 AS build
-
-WORKDIR /app
 
 COPY pom.xml .
 
@@ -14,11 +11,8 @@ RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
 
-WORKDIR /app
-
-
-COPY --from=build /app/target/aura-ecommerce-api-1.0.0.jar .
+COPY --from=build /target/aura-ecommerce-api-1.0.0.jar .
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app/aura-ecommerce-api-1.0.0.jar"]
+ENTRYPOINT ["java", "-jar", "aura-ecommerce-api-1.0.0.jar"]
