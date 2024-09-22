@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/aura-ecommerce/models/product';
 import { MessageService, SelectItem } from 'primeng/api';
-import { ProductService } from 'src/app/aura-ecommerce/service/product.service';
+import { ProductService } from 'src/app/aura-ecommerce/components/pages/product-administration/services/product.service';
 import { DataView } from 'primeng/dataview';
 import { TranslationService } from 'src/app/shared/services/translation/translate.service';
 
