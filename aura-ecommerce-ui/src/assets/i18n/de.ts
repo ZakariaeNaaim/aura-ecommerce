@@ -42,7 +42,9 @@ export const deLanguage={
         SIGN_IN_TO_CONTINUE:'Melden Sie sich an, um fortzufahren',
         USER_NAME : 'Benutzername',
         PASSWORD:'Passwort',
-        SIGN_IN :'Anmelden'
+        SIGN_IN :'Anmelden',
+        SIGN_UP: 'Registrieren',
+        DONT_HAVE_ACCOUNT: 'Noch kein Konto?'
     },
     SIGN_UP: {
         JOIN: 'Jetzt registrieren!',
@@ -64,7 +66,11 @@ export const deLanguage={
         PRICE: 'Preis',
         VIEW: 'Ansehen',
         SALES_OVERVIEW: 'Verkaufsübersicht',
-        EXPENSES : 'Kosten'
+        EXPENSES : 'Kosten',
+        RECENT_ORDERS: 'Letzte Bestellungen',
+        REFERENCE: 'Referenz',
+        ORDER_DATE: 'Bestelldatum',
+        STATUS: 'Status'
     },
     USERS: {
         USER_MANAGEMENT: 'Benutzerverwaltung',

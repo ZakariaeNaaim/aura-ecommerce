@@ -12,32 +12,21 @@ public class ResponseGenericResult<T> {
     private T data;
 
     public ResponseGenericResult(boolean isOk) {
-        if(isOk){
-            this.code = 200;
-            this.isOk = true;
-        }else {
-            this.code = 400;
-            this.isOk = false;
-        }
+        this(isOk, isOk ? "Operation successful" : "Operation failed", null);
     }
+
     public ResponseGenericResult(boolean isOk, String message) {
-        if(isOk){
-            this.code = 200;
-            this.isOk = true;
-        }else {
-            this.code = 400;
-            this.isOk = false;
-        }
-        this.message = message;
+        this(isOk, message, null);
     }
+
     public ResponseGenericResult(T data) {
-        if(data != null){
-            this.code = 200;
-            this.isOk = true;
-        }else {
-            this.code = 400;
-            this.isOk = false;
-        }
+        this(data != null, data != null ? "Operation successful" : "No data found", data);
+    }
+
+    public ResponseGenericResult(boolean isOk, String message, T data) {
+        this.isOk = isOk;
+        this.code = isOk ? 200 : 400;
+        this.message = message;
         this.data = data;
     }
 }

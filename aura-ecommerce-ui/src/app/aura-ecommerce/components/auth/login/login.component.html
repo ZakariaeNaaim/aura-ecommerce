@@ -1,4 +1,4 @@
-<p-toast />
+<p-toast></p-toast>
 
 <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
     <div class="flex flex-column align-items-center justify-content-center">
@@ -23,6 +23,12 @@
                         <button pButton pRipple label="{{'LOGIN.SIGN_IN'| translate}}" class="w-full p-3 text-xl" type="submit" [disabled]="loginForm.invalid"></button>
                     </div>
                 </form>
+
+                <!-- Sign Up Link -->
+                <div class="text-center mt-5">
+                    <span class="text-600">{{'LOGIN.DONT_HAVE_ACCOUNT' | translate}}</span>
+                    <a [routerLink]="['/auth/signup']" class="text-primary font-medium ml-2">{{'LOGIN.SIGN_UP' | translate}}</a>
+                </div>
             </div>
         </div>
     </div>

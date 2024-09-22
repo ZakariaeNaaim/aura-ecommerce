@@ -12,7 +12,7 @@ export class DashboardService {
     constructor(private http: HttpClient) {}
 
 
-    getOrders(userId:number): Observable<any> {
+    getInfos(userId:number): Observable<any> {
         return this.http.get(`${this.baseUrl}/${userId}`);
     }
 
