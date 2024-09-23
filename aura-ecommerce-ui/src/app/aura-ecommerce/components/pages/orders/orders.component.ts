@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { OrdersService } from './services/orders.service';
-import { AuthService } from 'src/app/aura-ecommerce/auth/services/auth.service';
+import { AuthService } from 'src/app/aura-ecommerce/core/services/auth.service';
 import { Order } from './models/order.model';
 import { ResponseGenericResult } from 'src/app/shared/models/response-generic-result/response-generic-result.model';
 import { TranslationService } from 'src/app/shared/services/translation/translate.service';
@@ -12,35 +12,24 @@ import { TranslationService } from 'src/app/shared/services/translation/translat
     providers: [MessageService]
 })
 export class OrdersComponent implements OnInit {
-
-    orderDialog: boolean = false;
-
-    deleteOrderDialog: boolean = false;
-
-    deleteOrdersDialog: boolean = false;
-
+    orderDialog = false;
+    deleteOrderDialog = false;
+    deleteOrdersDialog = false;
     orders: Order[] = [];
-
-    order: Order ;
-
+    order!: Order; 
     selectedOrders: Order[] = [];
-
-    submitted: boolean = false;
-
+    submitted = false;
     cols: any[] = [];
+    loading = true;
 
-    statuses: any[] = [];
+    constructor(
+        private ordersService: OrdersService,
+        private messageService: MessageService,
+        private authService: AuthService,
+        private translationService: TranslationService
+    ) {}
 
-    rowsPerPageOptions = [5, 10, 20];
-
-    loading=true;
-
-    constructor(private ordersService: OrdersService, private messageService: MessageService,private authService:AuthService,
-        private translationService:TranslationService
-    ) { }
-
-    ngOnInit() {
-
+    ngOnInit(): void {
         this.cols = [
             { field: 'id', header: 'Code' },
             { field: 'reference', header: 'Reference' },
@@ -48,33 +37,22 @@ export class OrdersComponent implements OnInit {
             { field: 'etat', header: 'Status' },
             { field: 'orderDate', header: 'Order Date' }
         ];
-    
-        this.getOrders();
+        this.loadOrders();
     }
 
-
-    getOrders():void{
+    private loadOrders(): void {
         this.ordersService.getOrdersByUserId(this.authService.userProfile.id).subscribe({
-            next :(res:ResponseGenericResult<Order[]>) => {
-                this.orders = res.data;
-            },
-            error :()=>{
-                this.showMessage('error', 'Error', 
-                    this.translationService.translate('PRODUCTS.CANT_CREATE_PRODUCT'));
-            },
-            complete : () =>{
-                this.loading=false;
-            }
-        })
+            next: (res: ResponseGenericResult<Order[]>) => this.orders = res.data,
+            error: () => this.showMessage('error', 'Error', this.translationService.translate('PRODUCTS.CANT_CREATE_PRODUCT')),
+            complete: () => this.loading = false
+        });
     }
 
-    onGlobalFilter(table: Table, event: Event) :void{
+    onGlobalFilter(table: Table, event: Event): void {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
 
-    private showMessage(severity: string, summary: string, detail: string, life?: number) {
-        const messageDetails = { severity, summary, detail };
-        if (life) messageDetails['life'] = life;
-        this.messageService.add(messageDetails);
+    private showMessage(severity: string, summary: string, detail: string, life?: number): void {
+        this.messageService.add({ severity, summary, detail, life });
     }
 }

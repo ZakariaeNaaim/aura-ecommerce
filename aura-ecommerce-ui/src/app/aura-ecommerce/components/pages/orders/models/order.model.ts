@@ -1,4 +1,4 @@
-import { User } from 'src/app/aura-ecommerce/auth/models/user.model';
+import { User } from 'src/app/aura-ecommerce/core/models/user.model';
 import { OrderEtatEnum } from '../enum/order-etat.enum';
 
 export interface Order {

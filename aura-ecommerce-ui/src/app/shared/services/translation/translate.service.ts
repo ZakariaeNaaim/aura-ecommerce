@@ -5,12 +5,10 @@ import { LanguageInterface, dictionary } from "src/assets/i18n/lang";
     providedIn: 'root'
 })
 export class TranslationService {
-    private currentLanguage: string | null = null;
 
     constructor() { }
 
     setCurrentLanguage(language: string): void {
-        this.currentLanguage = language;
         localStorage.setItem("currentLanguage", language);
     }
 
@@ -19,7 +17,7 @@ export class TranslationService {
     }
 
     translate(key: string, args?: string[]): string {
-        let language = localStorage.getItem("currentLanguage");
+        const language = localStorage.getItem("currentLanguage");
         if (language && dictionary[language]) {
             let returnValue = this.resolve(<LanguageInterface>dictionary[language], key);
             if (returnValue !== null) {

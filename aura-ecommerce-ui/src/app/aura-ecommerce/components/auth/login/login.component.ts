@@ -1,53 +1,67 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { AuthService } from 'src/app/aura-ecommerce/auth/services/auth.service';
+import { AuthService } from 'src/app/aura-ecommerce/core/services/auth.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styles: [`
-        :host ::ng-deep .pi-eye,
-        :host ::ng-deep .pi-eye-slash {
-            transform:scale(1.6);
-            margin-right: 1rem;
-            color: var(--primary-color) !important;
-        }
-    `],
-    providers: [MessageService]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styles: [`
+    :host ::ng-deep .pi-eye,
+    :host ::ng-deep .pi-eye-slash {
+      transform: scale(1.6);
+      margin-right: 1rem;
+      color: var(--primary-color) !important;
+    }
+  `],
+  providers: [MessageService]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-    valCheck: string[] = ['remember'];
+  valCheck: string[] = ['remember'];
 
-    password!: string;
+  password!: string;
 
-    loginForm: FormGroup;
+  loginForm: FormGroup;
 
-    constructor(private fb: FormBuilder, private authService: AuthService,public layoutService: LayoutService,
-      public router : Router, private messageService: MessageService) {}
-  
-    ngOnInit(): void {
-      this.loginForm = this.fb.group({
-        username: ['', [Validators.required, Validators.required]],
-        password: ['', [Validators.required, Validators.minLength(6)]]
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    public layoutService: LayoutService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
+
+  ngOnInit(): void {
+    this.initializeLoginForm();
+  }
+
+  private initializeLoginForm(): void {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
+
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      const credentials = this.loginForm.value;
+      this.authService.login(credentials).subscribe({
+        next: () => {
+          this.showMessage('success', 'Success', 'Logged in!');
+          this.router.navigate(['/']);
+        },
+        error: (error) => {
+          const errorMessage = error?.message || 'An error occurred during login.';
+          this.showMessage('error', 'Error', errorMessage);
+        }
       });
     }
-  
-    onSubmit(): void {
-      if (this.loginForm.valid) {
-        const credentials = this.loginForm.value;
-        this.authService.login(credentials).subscribe({
-          next: () => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'logged in !' });
-            this.router.navigate(['/']);
-          },
-          error: () => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: "something wrong" });
-          }
-        });
-      }
-    }
+  }
+
+  private showMessage(severity: string, summary: string, detail: string): void {
+    this.messageService.add({ severity, summary, detail });
+  }
 }

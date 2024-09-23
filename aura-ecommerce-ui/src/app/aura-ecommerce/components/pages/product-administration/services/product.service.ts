@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Product } from '../../../../models/product';
 import { Observable } from 'rxjs';
 import { ResponseGenericResult } from 'src/app/shared/models/response-generic-result/response-generic-result.model';
-import { Category } from '../../../../models/category';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -31,6 +30,10 @@ export class ProductService {
         return this.http.delete<ResponseGenericResult<boolean>>(`${this.baseUrl}/${ids}`);
     }
 
+    getCategories(): Observable<any> {
+        const url = `${environment.apiUrl}/categories/getAllCategories`;
+        return this.http.get(url);
+    }
 
 
     private fillFormData(product: Product,isUpdate:boolean){
@@ -47,35 +50,5 @@ export class ProductService {
         formData.append('inventoryStatus', product.inventoryStatus as string);
         return formData
     }
-    
-    getCategories(): Observable<any> {
-        const url = `http://localhost:8089/categories/getAllCategories`;
-        return this.http.get(url);
-    }
 
-    getProductsSmall() {
-        return this.http
-            .get<any>('assets/demo/data/products-small.json')
-            .toPromise()
-            .then((res) => res.data as Product[])
-            .then((data) => data);
-    }
-
-   
-
-    getProductsMixed() {
-        return this.http
-            .get<any>('assets/demo/data/products-mixed.json')
-            .toPromise()
-            .then((res) => res.data as Product[])
-            .then((data) => data);
-    }
-
-    getProductsWithOrdersSmall() {
-        return this.http
-            .get<any>('assets/demo/data/products-orders-small.json')
-            .toPromise()
-            .then((res) => res.data as Product[])
-            .then((data) => data);
-    }
 }
