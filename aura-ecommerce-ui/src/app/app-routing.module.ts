@@ -2,7 +2,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './aura-ecommerce/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
-import { AuthGuard } from './aura-ecommerce/auth/auth.guard';
+import { AuthGuard } from './aura-ecommerce/core/guards/auth.guard';
 
 @NgModule({
     imports: [

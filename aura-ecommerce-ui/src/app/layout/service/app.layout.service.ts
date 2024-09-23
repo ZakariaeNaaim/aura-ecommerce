@@ -1,23 +1,8 @@
 import { Injectable, effect, signal } from '@angular/core';
 import { Subject } from 'rxjs';
+import { AppConfig } from '../models/app-config.model';
+import { LayoutState } from '../models/layout-state.model';
 
-export interface AppConfig {
-    inputStyle: string;
-    colorScheme: string;
-    theme: string;
-    ripple: boolean ;
-    menuMode: string;
-    scale: number;
-}
-
-interface LayoutState {
-    staticMenuDesktopInactive: boolean;
-    overlayMenuActive: boolean;
-    profileSidebarVisible: boolean;
-    configSidebarVisible: boolean;
-    staticMenuMobileActive: boolean;
-    menuHoverActive: boolean;
-}
 
 @Injectable({
     providedIn: 'root',
@@ -137,7 +122,7 @@ export class LayoutService {
     }
     replaceThemeLink(href: string) {
         const id = 'theme-css';
-        let themeLink = <HTMLLinkElement>document.getElementById(id);
+        const themeLink = <HTMLLinkElement>document.getElementById(id);
         const cloneLinkElement = <HTMLLinkElement>themeLink.cloneNode(true);
 
         cloneLinkElement.setAttribute('href', href);

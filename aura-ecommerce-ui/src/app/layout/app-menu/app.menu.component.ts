@@ -1,36 +1,61 @@
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../service/app.layout.service';
-import { AuthService } from 'src/app/aura-ecommerce/auth/services/auth.service';
+import { AuthService } from 'src/app/aura-ecommerce/core/services/auth.service';
 import { TranslationService } from 'src/app/shared/services/translation/translate.service';
+import { MenuItem } from './models/menu-item.model';
+
 
 @Component({
-    selector: 'app-menu',
-    templateUrl: './app.menu.component.html'
+  selector: 'app-menu',
+  templateUrl: './app.menu.component.html'
 })
 export class AppMenuComponent implements OnInit {
+  model: MenuItem[] = [];
 
-    model: any[] = [];
+  constructor(
+    public layoutService: LayoutService,
+    private authService: AuthService,
+    private translationService: TranslationService
+  ) {}
 
-    constructor(public layoutService: LayoutService,private authService:AuthService , private translationService : TranslationService) { }
+  ngOnInit() {
+    this.model = [
+      this.createHomeMenu(),
+      this.createManagementMenu()
+    ];
+  }
 
-    ngOnInit() {
-        this.model = [
-            {
-                label:this.translationService.translate('APP_MENU.HOME'),
-                items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
-                ]
-            },
-            {
-                label: this.translationService.translate('APP_MENU.MANAGEMENT'),
-                items: [
-                    ...(this.authService.userProfile.role.includes('ROLE_ORDERS') ? [{ label: this.translationService.translate('APP_MENU.ORDERS'), icon: 'pi pi-fw pi-shopping-cart', routerLink: ['/pages/orders'] }] : []),
-                    ...(this.authService.userProfile.role.includes('ROLE_PRODUCTS_ADMIN') ? [{ label:this.translationService.translate('APP_MENU.PRODUCTS_ADMIN') , icon: 'pi pi-fw pi-bars', routerLink: ['/pages/product-administration']}] : []),
-                    ...(this.authService.userProfile.role.includes('ROLE_PRODUCTS') ? [{ label:this.translationService.translate('APP_MENU.PRODUCTS') , icon: 'pi pi-fw pi-bars', routerLink: ['/pages/product-user']}] : []),
-                    ...(this.authService.userProfile.role.includes('ROLE_USERS') ? [{label:this.translationService.translate('APP_MENU.USERS'), icon: 'pi pi-fw pi-users', routerLink: ['/pages/users']  }] : []),
-                ]
-            },
-        ];
-    }
+  private createHomeMenu(): MenuItem {
+    return {
+      label: this.translationService.translate('APP_MENU.HOME'),
+      items: [
+        { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
+      ]
+    };
+  }
+
+  private createManagementMenu(): MenuItem {
+    return {
+      label: this.translationService.translate('APP_MENU.MANAGEMENT'),
+      items: this.getManagementItems()
+    };
+  }
+
+  private getManagementItems(): MenuItem[] {
+    const roles = this.authService.userProfile.role;
+    return [
+      ...(roles.includes('ROLE_ORDERS') ? [this.createMenuItem('APP_MENU.ORDERS', 'pi-shopping-cart', ['/pages/orders'])] : []),
+      ...(roles.includes('ROLE_PRODUCTS_ADMIN') ? [this.createMenuItem('APP_MENU.PRODUCTS_ADMIN', 'pi-bars', ['/pages/product-administration'])] : []),
+      ...(roles.includes('ROLE_PRODUCTS') ? [this.createMenuItem('APP_MENU.PRODUCTS', 'pi-bars', ['/pages/product-user'])] : []),
+      ...(roles.includes('ROLE_USERS') ? [this.createMenuItem('APP_MENU.USERS', 'pi-users', ['/pages/users'])] : [])
+    ];
+  }
+
+  private createMenuItem(labelKey: string, icon: string, routerLink: string[]): MenuItem {
+    return {
+      label: this.translationService.translate(labelKey),
+      icon: `pi pi-fw ${icon}`,
+      routerLink
+    };
+  }
 }

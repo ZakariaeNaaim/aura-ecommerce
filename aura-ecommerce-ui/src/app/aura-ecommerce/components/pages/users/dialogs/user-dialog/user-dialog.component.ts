@@ -1,14 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AuraUser } from '../../models/aura-user.model';
 import { SelectItem } from 'src/app/shared/models/p-multi-dropdown/select-item-multidropdown.model';
 
 @Component({
   selector: 'app-user-dialog',
   templateUrl: './user-dialog.component.html',
-  styleUrl: './user-dialog.component.scss'
+  styleUrls: ['./user-dialog.component.scss'] // Corrected from styleUrl to styleUrls
 })
 export class UserDialogComponent {
-
   roles: SelectItem[] = [
     { name: 'ROLE_ORDERS', code: 1 },
     { name: 'ROLE_PRODUCTS', code: 2 },
@@ -24,15 +23,16 @@ export class UserDialogComponent {
   @Output() onCancel = new EventEmitter<void>();
 
   private _user: AuraUser = { username: '', email: '', password: '', role: [] };
+  
   @Input()
   get user(): AuraUser {
     return this._user;
   }
+  
   set user(value: AuraUser) {
     this._user = value;
-    this.onUserChange();
+    this.updateSelectedRoles();
   }
-
 
   hideDialog(): void {
     this.display = false;
@@ -49,24 +49,32 @@ export class UserDialogComponent {
   }
 
   isValid(): boolean {
-    if (this.selectedRoles && !this.selectedRoles.some(role => role.code === 5)) {
-      this.selectedRoles.push(this.roles.find(role => role.code === 5));
-    }
+    this.ensureDashboardRole();
 
     this.user.role = this.selectedRoles.map(role => ({
       id: role.code,
       name: role.name
     }));
 
-    const isUsernameValid = this.user.username.trim() !== '';
-    const isEmailValid = this.user.email.trim() !== '';
-    const isPasswordValid = this.user.password.trim() !== '';
-
-    return isUsernameValid && isEmailValid && isPasswordValid;
+    return this.isUserDetailsValid();
   }
 
-  private onUserChange(): void {
-    this.selectedRoles = this.roles?.filter(role =>
+  private ensureDashboardRole(): void {
+    if (!this.selectedRoles.some(role => role.code === 5)) {
+      const dashboardRole = this.roles.find(role => role.code === 5);
+      if (dashboardRole) {
+        this.selectedRoles.push(dashboardRole);
+      }
+    }
+  }
+
+  private isUserDetailsValid(): boolean {
+    const { username, email, password } = this.user;
+    return username.trim() !== '' && email.trim() !== '' && password.trim() !== '';
+  }
+
+  private updateSelectedRoles(): void {
+    this.selectedRoles = this.roles.filter(role =>
       this._user?.role?.some(userRole => userRole.id === role.code)
     );
   }

@@ -21,7 +21,7 @@
                         <label for="password" class="block text-900 font-medium text-xl mb-2">{{'SIGN_UP.PASSWORD' | translate }}</label>
                         <p-password id="password" formControlName="password" placeholder="{{'SIGN_UP.PASSWORD' | translate }}" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-25rem"></p-password>
 
-                        <button pButton pRipple label="{{'SIGN_UP.SIGN_UP' | translate }}" class="w-full p-3 text-xl" type="submit" [disabled]="signupForm.invalid"></button>
+                        <button pButton pRipple class="w-full p-3 text-xl" type="submit" [disabled]="signupForm.invalid">{{'SIGN_UP.SIGN_UP' | translate }}</button>
                     </div>
                 </form>
             </div>
