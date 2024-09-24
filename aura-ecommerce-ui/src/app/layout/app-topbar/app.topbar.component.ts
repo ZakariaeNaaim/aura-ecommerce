@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { LayoutService } from "../service/app.layout.service";
-import { AuthService } from 'src/app/aura-ecommerce/auth/services/auth.service';
+import { AuthService } from 'src/app/aura-ecommerce/core/services/auth.service';
 import { Router } from '@angular/router';
 import { SelectItemDropDown } from 'src/app/shared/models/p-dropdown/select-item-dropdown.model';
 import { TranslationService } from 'src/app/shared/services/translation/translate.service';

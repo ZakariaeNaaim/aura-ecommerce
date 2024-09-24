@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { OrdersComponent } from './orders.component';
-import { AuthGuard } from 'src/app/aura-ecommerce/auth/auth.guard';
+import { AuthGuard } from 'src/app/aura-ecommerce/core/guards/auth.guard';
 
 @NgModule({
 	imports: [RouterModule.forChild([

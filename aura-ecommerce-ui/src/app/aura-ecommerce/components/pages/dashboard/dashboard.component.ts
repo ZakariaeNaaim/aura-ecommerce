@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Subscription, debounceTime } from 'rxjs';
-import { Product } from 'src/app/aura-ecommerce/models/product';
 import { ProductService } from 'src/app/aura-ecommerce/components/pages/product-administration/services/product.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { DashboardService } from './services/dashboard.service';
-import { AuthService } from 'src/app/aura-ecommerce/auth/services/auth.service';
+import { AuthService } from 'src/app/aura-ecommerce/core/services/auth.service';
 import { Order } from '../orders/models/order.model';
 
 @Component({
@@ -13,58 +12,47 @@ import { Order } from '../orders/models/order.model';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-    orders:Order[];
-
-    expenses :number;
-
-    items!: MenuItem[];
-
-    products!: Product[];
-
+    orders: Order[] = [];
+    expenses = 0;
+    items: MenuItem[] = [];
     chartData: any;
-
     chartOptions: any;
+    private subscription!: Subscription;
 
-    subscription!: Subscription;
-
-    constructor(private productService: ProductService, public layoutService: LayoutService,private dashboardService:DashboardService,
-                private authService:AuthService
+    constructor(
+        public layoutService: LayoutService,
+        private dashboardService: DashboardService,
+        private authService: AuthService
     ) {
         this.subscription = this.layoutService.configUpdate$
-        .pipe(debounceTime(25))
-        .subscribe((config) => {
-            this.initChart();
-        });
+            .pipe(debounceTime(25))
+            .subscribe(() => this.initChart());
     }
 
-    ngOnInit() {
-        this.getOrders();
-        this.initChart();
-        this.productService.getProductsSmall().then(data => this.products = data);
+    ngOnInit(): void {
+        this.loadData();
+    }
 
+    private loadData(): void {
+        this.getOrders();
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
             { label: 'Remove', icon: 'pi pi-fw pi-minus' }
         ];
     }
-    getOrders() {
-        this.dashboardService.getInfos(this.authService.userProfile.id).subscribe({
-            next : (res) => {
-                this.orders=res;
-                this.expenses = res.reduce((sum:any, command:any) => sum + command.totalCommand, 0);
-            },
-            error : () => {
 
-            }
-        })
+    private getOrders(): void {
+        this.dashboardService.getInfos(this.authService.userProfile.id).subscribe({
+            next: (res: Order[]) => {
+                this.orders = res;
+                this.expenses = res.reduce((sum, order) => sum + order.totalCommand, 0);
+            },
+            error: () => console.error('Failed to fetch orders')
+        });
     }
 
-    initChart() {
-        const documentStyle = getComputedStyle(document.documentElement);
-        const textColor = documentStyle.getPropertyValue('--text-color');
-        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
+    private initChart(): void {
+        const styles = getComputedStyle(document.documentElement);
         this.chartData = {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             datasets: [
@@ -72,55 +60,42 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     label: 'First Dataset',
                     data: [65, 59, 80, 81, 56, 55, 40],
                     fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--bluegray-700'),
-                    borderColor: documentStyle.getPropertyValue('--bluegray-700'),
-                    tension: .4
+                    backgroundColor: styles.getPropertyValue('--bluegray-700'),
+                    borderColor: styles.getPropertyValue('--bluegray-700'),
+                    tension: 0.4
                 },
                 {
                     label: 'Second Dataset',
                     data: [28, 48, 40, 19, 86, 27, 90],
                     fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--green-600'),
-                    borderColor: documentStyle.getPropertyValue('--green-600'),
-                    tension: .4
+                    backgroundColor: styles.getPropertyValue('--green-600'),
+                    borderColor: styles.getPropertyValue('--green-600'),
+                    tension: 0.4
                 }
             ]
         };
-
         this.chartOptions = {
             plugins: {
                 legend: {
                     labels: {
-                        color: textColor
+                        color: styles.getPropertyValue('--text-color')
                     }
                 }
             },
             scales: {
                 x: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
+                    ticks: { color: styles.getPropertyValue('--text-color-secondary') },
+                    grid: { color: styles.getPropertyValue('--surface-border'), drawBorder: false }
                 },
                 y: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
+                    ticks: { color: styles.getPropertyValue('--text-color-secondary') },
+                    grid: { color: styles.getPropertyValue('--surface-border'), drawBorder: false }
                 }
             }
         };
     }
 
-    ngOnDestroy() {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
-        }
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 }

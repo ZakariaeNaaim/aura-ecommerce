@@ -9,12 +9,12 @@
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button pButton pRipple label="{{ 'PRODUCTS.NEW' | translate }}" icon="pi pi-plus" class="p-button-success mr-2"
-                            (click)="openNew()"></button>
-                        <button pButton pRipple label="{{ 'PRODUCTS.DELETE' | translate }}" icon="pi pi-trash" class="p-button-danger"
+                        <button pButton pRipple icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="openNew()">{{ 'PRODUCTS.NEW' | translate }}</button>
+                        <button pButton pRipple  icon="pi pi-trash" class="p-button-danger"
                             (click)="deleteSelectedProducts()" [disabled]="
                                 !selectedProducts || !selectedProducts.length
-                            "></button>
+                            ">{{ 'PRODUCTS.DELETE' | translate }}</button>
                     </div>
                 </ng-template>
             </p-toolbar>

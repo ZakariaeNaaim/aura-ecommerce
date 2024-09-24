@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuraUser } from './models/aura-user.model';
 import { UserManagementService } from './services/user-management.service';
-import { AuthService } from 'src/app/aura-ecommerce/auth/services/auth.service';
+import { AuthService } from 'src/app/aura-ecommerce/core/services/auth.service';
 import { TranslationService } from 'src/app/shared/services/translation/translate.service';
 
 @Component({
